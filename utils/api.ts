@@ -17,19 +17,27 @@ type Setlist = {
   musics: Music[];
 };
 
-type Content<T = {}> = {
-  id: string;
-} & T;
-
-export const getTheBethSetlists = async (): Promise<
-  Content<{ setlist: Setlist }>[]
-> => {
+export const getTheBethSetlists = async (): Promise<Setlist[]> => {
   try {
     const res = await client.get({
       endpoint: "setlists",
     });
 
     return res.contents;
+  } catch (e: any) {
+    // TODO: Handle error
+    throw new Error(e.message);
+  }
+};
+
+export const getThebethSetlist = async (id: string): Promise<Setlist> => {
+  try {
+    const res = await client.get({
+      endpoint: "setlists",
+      contentId: id,
+    });
+
+    return res;
   } catch (e: any) {
     // TODO: Handle error
     throw new Error(e.message);
