@@ -1,5 +1,7 @@
 import { getThebethSetlist } from "@/utils/api";
 import Image from "next/image";
+import { Card } from "@nextui-org/react";
+import { MusicTable } from "./_components/MusicTable";
 
 type Props = {
   params: {
@@ -11,19 +13,24 @@ export default async function Home({ params }: Props) {
   const setlist = await getThebethSetlist(params.setlistId);
 
   return (
-    <main>
-      {!!setlist.image && (
-        <Image
-          src={setlist.image.url}
-          alt={setlist.title}
-          width={setlist.image.width}
-          height={setlist.image.height}
-        />
-      )}
-      <h1>{setlist.title}</h1>
-      {setlist.musics.map((music) => (
-        <p key={music.id}>{music.title}</p>
-      ))}
-    </main>
+    <div>
+      <div className="w-full py-8">
+        <div className="w-2/4 mx-auto">
+          <Card className="w-full aspect-square">
+            {!!setlist.image && (
+              <Image
+                className="w-full height-full"
+                src={setlist.image.url}
+                alt={setlist.title}
+                width={setlist.image.width}
+                height={setlist.image.height}
+              />
+            )}
+          </Card>
+        </div>
+        <h1 className="text-xl font-bold text-center mt-4">{setlist.title}</h1>
+      </div>
+      <MusicTable musics={setlist.musics} />
+    </div>
   );
 }

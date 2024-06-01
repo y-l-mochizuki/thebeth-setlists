@@ -1,12 +1,12 @@
 import { client } from "./microcms";
 
 // TODO: 自動で型生成したい
-type Music = {
+export type Music = {
   id: string;
   title: string;
 };
 
-type Setlist = {
+export type Setlist = {
   id: string;
   title: string;
   image?: {
