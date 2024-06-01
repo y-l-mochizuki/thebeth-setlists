@@ -22,11 +22,16 @@ export const MusicTable = ({ musics }: Props) => {
         <TableColumn>NAME</TableColumn>
       </TableHeader>
       <TableBody>
-        {musics.map((v) => (
-          <TableRow key={v.id}>
-            <TableCell>{v.title}</TableCell>
-          </TableRow>
-        ))}
+        {musics.map((v, i) => {
+          const order = i + 1;
+          return (
+            <TableRow key={v.id}>
+              <TableCell>
+                {order}. {v.title}
+              </TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );

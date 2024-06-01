@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { NextUIProvider } from "@nextui-org/react";
@@ -9,6 +9,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "thebeth setlists",
   description: "thebeth setlists",
+};
+
+export const viewport: Viewport = {
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -32,7 +36,7 @@ export default function RootLayout({
 
 const Background = () => (
   <div
-    className="fixed w-full h-screen top-0 left-0 z-[-1]"
+    className="fixed w-full min-h-screen top-0 left-0 z-[-1]"
     style={{
       background:
         "radial-gradient(circle at top left, rgba(255, 0, 0, 0.2), transparent 50%), radial-gradient(circle at top right, rgba(128, 0, 128, 0.2), transparent 50%), radial-gradient(circle at bottom right, rgba(255, 165, 0, 0.2), transparent 50%), radial-gradient(circle at bottom left, rgba(255, 192, 203, 0.2), transparent 50%)",
