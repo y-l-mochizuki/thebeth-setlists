@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/third-parties": "^14.2.3",
     "@nextui-org/react": "^2.4.1",
     "framer-motion": "^11.2.10",
     "microcms-js-sdk": "^3.1.1",
