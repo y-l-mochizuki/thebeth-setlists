@@ -14,6 +14,7 @@ export type Setlist = {
     width: number;
     height: number;
   };
+  live_date?: string;
   musics: Music[];
 };
 

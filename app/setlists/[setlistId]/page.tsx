@@ -2,6 +2,7 @@ import { getThebethSetlist } from "@/utils/api";
 import Image from "next/image";
 import { Card } from "@nextui-org/react";
 import { MusicTable } from "./_components/MusicTable";
+import { toJstDate } from "@/utils/format";
 
 type Props = {
   params: {
@@ -11,6 +12,7 @@ type Props = {
 
 export default async function Home({ params }: Props) {
   const setlist = await getThebethSetlist(params.setlistId);
+  const musicLenght = setlist.musics.length;
 
   return (
     <div>
@@ -28,7 +30,14 @@ export default async function Home({ params }: Props) {
             )}
           </Card>
         </div>
-        <h1 className="text-xl font-bold text-center mt-4">{setlist.title}</h1>
+        <div className="text-center mt-4">
+          <h1 className="text-xl font-bold">{setlist.title}</h1>
+          {!!setlist.live_date && (
+            <p className="opacity-50 mt-1">
+              {toJstDate(setlist.live_date)} / 全{musicLenght}曲
+            </p>
+          )}
+        </div>
       </div>
       <div className="mt-8">
         <MusicTable musics={setlist.musics} />
