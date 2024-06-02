@@ -15,33 +15,33 @@ export default async function Home({ params }: Props) {
   const musicLenght = setlist.musics.length;
 
   return (
-    <div>
+    <>
       <div className="w-full">
         <div className="w-2/4 mx-auto">
-          <Card className="w-full aspect-square">
+          <Card className="w-full aspect-square relative">
             {!!setlist.image && (
               <Image
-                className="w-full height-full"
+                className="w-full h-full object-cover"
                 src={setlist.image.url}
                 alt={setlist.title}
-                width={setlist.image.width}
-                height={setlist.image.height}
+                fill
               />
             )}
           </Card>
         </div>
-        <div className="text-center mt-4">
+        <div className="grid mt-4">
           <h1 className="text-xl font-bold">{setlist.title}</h1>
-          {!!setlist.live_date && (
-            <p className="opacity-50 mt-1">
-              {toJstDate(setlist.live_date)} / 全{musicLenght}曲
-            </p>
-          )}
+          <div className="opacity-50 mt-1">
+            {!!setlist.live_date && (
+              <p>開催日: {toJstDate(setlist.live_date)}</p>
+            )}
+            <p>楽曲数: {musicLenght}</p>
+          </div>
         </div>
       </div>
       <div className="mt-8">
         <MusicTable musics={setlist.musics} />
       </div>
-    </div>
+    </>
   );
 }
