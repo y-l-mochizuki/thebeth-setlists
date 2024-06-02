@@ -21,6 +21,9 @@ export const getTheBethSetlists = async (): Promise<Setlist[]> => {
   try {
     const res = await client.get({
       endpoint: "setlists",
+      queries: {
+        orders: "-live_date", // 開催日の降順
+      },
     });
 
     return res.contents;
