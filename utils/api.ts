@@ -25,6 +25,9 @@ export const getTheBethSetlists = async (): Promise<Setlist[]> => {
       queries: {
         orders: "-live_date", // 開催日の降順
       },
+      customRequestInit: {
+        cache: "no-store", // キャッシュを利用せずに常に新しいデータを取得する
+      },
     });
 
     return res.contents;
@@ -39,6 +42,9 @@ export const getThebethSetlist = async (id: string): Promise<Setlist> => {
     const res = await client.get({
       endpoint: "setlists",
       contentId: id,
+      customRequestInit: {
+        cache: "no-store", // キャッシュを利用せずに常に新しいデータを取得する
+      },
     });
 
     return res;
