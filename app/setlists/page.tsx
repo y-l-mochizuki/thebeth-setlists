@@ -1,5 +1,6 @@
 import { Setlist, getTheBethSetlists } from "@/utils/api";
 import { Button, Card, Link } from "@nextui-org/react";
+import { toJstDate } from "@/utils/format";
 
 import Image from "next/image";
 
@@ -28,7 +29,12 @@ const Setlists = ({ setlists }: { setlists: Setlist[] }) => (
             />
           )}
         </Card>
-        <h2 className="text-white font-bold">{setlist.title}</h2>
+        <div>
+          <h2 className="font-bold text-base">{setlist.title}</h2>
+          {!!setlist.live_date && (
+            <p className="opacity-50 text-sm">{toJstDate(setlist.live_date)}</p>
+          )}
+        </div>
       </Button>
     ))}
   </div>
