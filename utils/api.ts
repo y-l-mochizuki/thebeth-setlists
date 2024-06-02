@@ -18,6 +18,12 @@ export type Setlist = {
   musics: Music[];
 };
 
+const customRequestInit = {
+  next: {
+    revalidate: 3600, // 1時間でページを再読み込み、キャッシュを利用する
+  },
+};
+
 export const getTheBethSetlists = async (): Promise<Setlist[]> => {
   try {
     const res = await client.get({
@@ -25,11 +31,7 @@ export const getTheBethSetlists = async (): Promise<Setlist[]> => {
       queries: {
         orders: "-live_date", // 開催日の降順
       },
-      customRequestInit: {
-        next: {
-          revalidate: 0, // 0秒でページを再読み込み、キャッシュを利用せずに常に新しいデータを取得する
-        },
-      },
+      customRequestInit,
     });
 
     return res.contents;
@@ -44,11 +46,7 @@ export const getThebethSetlist = async (id: string): Promise<Setlist> => {
     const res = await client.get({
       endpoint: "setlists",
       contentId: id,
-      customRequestInit: {
-        next: {
-          revalidate: 0, // 0秒でページを再読み込み、キャッシュを利用せずに常に新しいデータを取得する
-        },
-      },
+      customRequestInit,
     });
 
     return res;
