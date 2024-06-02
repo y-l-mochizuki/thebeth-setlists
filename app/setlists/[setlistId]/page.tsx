@@ -14,7 +14,7 @@ export default async function Home({ params }: Props) {
 
   return (
     <div>
-      <div className="w-full py-8">
+      <div className="w-full">
         <div className="w-2/4 mx-auto">
           <Card className="w-full aspect-square">
             {!!setlist.image && (
@@ -30,7 +30,9 @@ export default async function Home({ params }: Props) {
         </div>
         <h1 className="text-xl font-bold text-center mt-4">{setlist.title}</h1>
       </div>
-      <MusicTable musics={setlist.musics} />
+      <div className="mt-8">
+        <MusicTable musics={setlist.musics} />
+      </div>
     </div>
   );
 }

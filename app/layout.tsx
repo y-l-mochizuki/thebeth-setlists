@@ -23,9 +23,8 @@ export default function RootLayout({
   return (
     <html lang="ja" className="dark">
       <body className={(inter.className, "relative")}>
-        <Background />
         <NextUIProvider>
-          <main className="max-w-sm mx-auto p-4">{children}</main>
+          <main className="max-w-sm mx-auto px-4 py-8">{children}</main>
         </NextUIProvider>
         <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID || ""} />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GTM_ID || ""} />
@@ -33,13 +32,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-const Background = () => (
-  <div
-    className="fixed w-full min-h-screen top-0 left-0 z-[-1]"
-    style={{
-      background:
-        "radial-gradient(circle at top left, rgba(255, 0, 0, 0.2), transparent 50%), radial-gradient(circle at top right, rgba(128, 0, 128, 0.2), transparent 50%), radial-gradient(circle at bottom right, rgba(255, 165, 0, 0.2), transparent 50%), radial-gradient(circle at bottom left, rgba(255, 192, 203, 0.2), transparent 50%)",
-    }}
-  />
-);

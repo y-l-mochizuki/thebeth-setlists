@@ -9,7 +9,7 @@ export default async function Home() {
 }
 
 const Setlists = ({ setlists }: { setlists: Setlist[] }) => (
-  <div className="w-full grid grid-cols-2 gap-4">
+  <div className="w-full grid grid-cols-2 gap-8">
     {setlists.map((setlist) => (
       <Button
         className="grid h-auto bg-transparent border-0 p-0 justify-stretch rounded-none"
