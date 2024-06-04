@@ -1,9 +1,14 @@
 import { client } from "./microcms";
 
+type IframeString = {
+  src: string;
+};
+
 // TODO: 自動で型生成したい
 export type Music = {
   id: string;
   title: string;
+  iframe_strings: IframeString[] | null;
 };
 
 export type Setlist = {
