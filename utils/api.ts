@@ -25,7 +25,7 @@ export type Setlist = {
 
 const customRequestInit = {
   next: {
-    revalidate: 3600, // 1時間でページを再読み込み、キャッシュを利用する
+    revalidate: Number(process.env.NEXT_PUBLIC_MICROCMS_CACHE_TIME || 3600), // キャッシュの有効期限（秒） 3600秒 = 1時間
   },
 };
 
