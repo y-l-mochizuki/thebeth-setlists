@@ -38,7 +38,8 @@ export const MusicTable = ({ musics }: Props) => {
         <TableBody>
           {musics.map((v, i) => {
             const order = i + 1;
-            const hasModalContent = v.iframe_strings !== null;
+            const hasModalContent =
+              v.iframe_strings !== null && v.iframe_strings.length > 0;
             return (
               <TableRow key={v.id}>
                 <TableCell>
