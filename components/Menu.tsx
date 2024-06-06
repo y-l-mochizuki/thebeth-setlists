@@ -9,7 +9,10 @@ import {
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import React, { PropsWithChildren } from "react";
-import { ExternalLink as ExternalLinkIcon, Menu2 } from "tabler-icons-react";
+import {
+  ExternalLink as ExternalLinkIcon,
+  Menu as MenuIcon,
+} from "tabler-icons-react";
 
 export const Menu = () => {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
@@ -25,7 +28,7 @@ export const Menu = () => {
   return (
     <>
       <button onClick={onOpen} type="button">
-        <Menu2 size={24} strokeWidth={1} className="text-white/80" />
+        <MenuIcon size={24} strokeWidth={1} className="text-white/80" />
       </button>
       <Modal
         isOpen={isOpen}
