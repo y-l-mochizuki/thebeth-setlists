@@ -21,6 +21,9 @@ export type Setlist = {
   };
   live_date?: string;
   musics: Music[];
+  purchase_links?: {
+    link: string;
+  }[];
 };
 
 const customRequestInit = {
