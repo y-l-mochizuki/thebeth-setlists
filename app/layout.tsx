@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className="dark">
-      <body className={(inter.className, "relative")}>
+      <body className={(inter.className, "relative overscroll-none")}>
         <NextUIProvider>
           <Header />
           <Main>{children}</Main>
@@ -40,7 +40,7 @@ export default function RootLayout({
 
 const Header = () => {
   return (
-    <div className="flex z-40 w-full h-auto items-center justify-center data-[menu-open=true]:border-none sticky top-0 inset-x-0 backdrop-blur-lg data-[menu-open=true]:backdrop-blur-xl backdrop-saturate-150 bg-background/70">
+    <div className="flex z-40 w-full h-auto items-center justify-center data-[menu-open=true]:border-none sticky top-0 inset-x-0 backdrop-blur-lg data-[menu-open=true]:backdrop-blur-xl backdrop-saturate-150 bg-background/70 border-white/20 border-b">
       <div className="w-full flex items-center justify-between max-w-sm mx-auto px-4 py-2">
         <Link className="text-tiny text-white/80" href="/">
           THE+BETH

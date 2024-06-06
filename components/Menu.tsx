@@ -90,7 +90,7 @@ const ExternalLink = ({
   return (
     <a className="flex items-center gap-1 text-sm" href={href} target="_blank">
       {children}
-      <ExternalLinkIcon size={20} strokeWidth={2} className="text-white/80" />
+      <ExternalLinkIcon size={16} strokeWidth={1} className="text-white/80" />
     </a>
   );
 };
