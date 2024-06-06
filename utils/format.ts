@@ -9,3 +9,19 @@ export const toJstDate = (utcDateString: string): string => {
 
   return `${year}-${month}-${day}`;
 };
+
+export const identifyURL = (url: string) => {
+  if (url.includes("amzn.asia") || url.includes("amazon.co.jp")) {
+    return "Amazon";
+  }
+
+  if (url.includes("tower.jp")) {
+    return "タワーレコード";
+  }
+
+  if (url.includes("thebeth.official.ec")) {
+    return "THE BETH オフィシャル WEB ショップ";
+  }
+
+  return "外部サイト";
+};
