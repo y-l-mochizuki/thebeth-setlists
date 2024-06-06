@@ -46,10 +46,57 @@ export const getTheBethSetlists = async (): Promise<Setlist[]> => {
   }
 };
 
-export const getThebethSetlist = async (id: string): Promise<Setlist> => {
+export const getTheBethSetlist = async (id: string): Promise<Setlist> => {
   try {
     const res = await client.get({
       endpoint: "setlists",
+      contentId: id,
+      customRequestInit,
+    });
+
+    return res;
+  } catch (e: any) {
+    // TODO: Handle error
+    throw new Error(e.message);
+  }
+};
+
+export type AlbumType = {
+  id: string;
+  title: string;
+  image?: {
+    url: string;
+    width: number;
+    height: number;
+  };
+  musics: Music[];
+  purchase_links?: {
+    link: string;
+  }[];
+  release_date: string;
+};
+
+export const getTheBethAlbums = async (): Promise<AlbumType[]> => {
+  try {
+    const res = await client.get({
+      endpoint: "albums",
+      queries: {
+        orders: "-release_date", // 開催日の降順
+      },
+      customRequestInit,
+    });
+
+    return res.contents;
+  } catch (e: any) {
+    // TODO: Handle error
+    throw new Error(e.message);
+  }
+};
+
+export const getTheBethAlbum = async (id: string): Promise<AlbumType> => {
+  try {
+    const res = await client.get({
+      endpoint: "albums",
       contentId: id,
       customRequestInit,
     });

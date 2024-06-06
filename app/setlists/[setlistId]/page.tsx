@@ -1,8 +1,8 @@
-import { getThebethSetlist } from "@/utils/api";
+import { getTheBethSetlist } from "@/utils/api";
 import Image from "next/image";
 import { Card } from "@nextui-org/react";
-import { MusicTable } from "./_components/MusicTable";
 import { toJstDate } from "@/utils/format";
+import { MusicTable } from "@/components";
 
 type Props = {
   params: {
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default async function Home({ params }: Props) {
-  const setlist = await getThebethSetlist(params.setlistId);
+  const setlist = await getTheBethSetlist(params.setlistId);
   const musicLenght = setlist.musics.length;
 
   return (
