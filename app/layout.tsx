@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { NextUIProvider } from "@nextui-org/react";
+import { Card, CardFooter, NextUIProvider } from "@nextui-org/react";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { PropsWithChildren } from "react";
+import { Menu } from "@/components";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +27,7 @@ export default function RootLayout({
     <html lang="ja" className="dark">
       <body className={(inter.className, "relative")}>
         <NextUIProvider>
+          <Header />
           <Main>{children}</Main>
           <Footer />
         </NextUIProvider>
@@ -34,6 +37,25 @@ export default function RootLayout({
     </html>
   );
 }
+
+const Header = () => {
+  return (
+    <Card
+      isFooterBlurred
+      radius="none"
+      className="border-none bg-transparent sticky top-0 z-10"
+    >
+      <CardFooter className="before:bg-white/10 border-white/20 border-b overflow-hidden before:rounded-xl shadow-small p-0">
+        <div className="w-full flex items-center justify-between max-w-sm mx-auto px-4 py-2">
+          <Link className="text-tiny text-white/80" href="/">
+            THE+BETH
+          </Link>
+          <Menu />
+        </div>
+      </CardFooter>
+    </Card>
+  );
+};
 
 const Main = ({ children }: PropsWithChildren) => {
   return (
