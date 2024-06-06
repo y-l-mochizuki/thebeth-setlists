@@ -40,14 +40,17 @@ export default function RootLayout({
 
 const Header = () => {
   return (
-    <div className="flex z-40 w-full h-auto items-center justify-center data-[menu-open=true]:border-none sticky top-0 inset-x-0 backdrop-blur-lg data-[menu-open=true]:backdrop-blur-xl backdrop-saturate-150 bg-background/70">
-      <div className="w-full flex items-center justify-between max-w-sm mx-auto px-4 py-2">
-        <Link className="text-tiny text-white/80" href="/">
-          THE+BETH
-        </Link>
-        <Menu />
+    <>
+      <div className="h-[40px]" />
+      <div className="flex z-40 w-full h-auto items-center justify-center data-[menu-open=true]:border-none fixed top-0 inset-x-0 backdrop-blur-lg data-[menu-open=true]:backdrop-blur-xl backdrop-saturate-150 bg-background/70">
+        <div className="w-full flex items-center justify-between max-w-sm mx-auto px-4 py-2">
+          <Link className="text-tiny text-white/80" href="/">
+            THE+BETH
+          </Link>
+          <Menu />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
