@@ -56,10 +56,10 @@ export const Menu = () => {
                   アルバム一覧
                 </MenuItem>
                 <ExternalLink href="https://thebeth.jp/">
-                  THE BETH オフィシャル サイト
+                  オフィシャルサイト
                 </ExternalLink>
                 <ExternalLink href="https://thebeth.official.ec/">
-                  THE BETH オフィシャル WEB ショップ
+                  オフィシャル WEB ショップ
                 </ExternalLink>
               </ModalBody>
             </>
@@ -76,7 +76,7 @@ const MenuItem = ({
 }: PropsWithChildren & {
   onClick: () => void;
 }) => (
-  <button className="text-left" onClick={onClick} type="button">
+  <button className="text-left text-sm" onClick={onClick} type="button">
     {children}
   </button>
 );
@@ -88,7 +88,7 @@ const ExternalLink = ({
   href: string;
 }) => {
   return (
-    <a className="flex items-center gap-1" href={href} target="_blank">
+    <a className="flex items-center gap-1 text-sm" href={href} target="_blank">
       {children}
       <ExternalLinkIcon size={20} strokeWidth={2} className="text-white/80" />
     </a>

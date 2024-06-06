@@ -40,20 +40,14 @@ export default function RootLayout({
 
 const Header = () => {
   return (
-    <Card
-      isFooterBlurred
-      radius="none"
-      className="border-none bg-transparent sticky top-0 z-10"
-    >
-      <CardFooter className="before:bg-white/10 border-white/20 border-b overflow-hidden before:rounded-xl shadow-small p-0">
-        <div className="w-full flex items-center justify-between max-w-sm mx-auto px-4 py-2">
-          <Link className="text-tiny text-white/80" href="/">
-            THE+BETH
-          </Link>
-          <Menu />
-        </div>
-      </CardFooter>
-    </Card>
+    <div className="flex z-40 w-full h-auto items-center justify-center data-[menu-open=true]:border-none sticky top-0 inset-x-0 backdrop-blur-lg data-[menu-open=true]:backdrop-blur-xl backdrop-saturate-150 bg-background/70">
+      <div className="w-full flex items-center justify-between max-w-sm mx-auto px-4 py-2">
+        <Link className="text-tiny text-white/80" href="/">
+          THE+BETH
+        </Link>
+        <Menu />
+      </div>
+    </div>
   );
 };
 
