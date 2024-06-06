@@ -4,6 +4,8 @@ import "./globals.css";
 import { NextUIProvider } from "@nextui-org/react";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { PropsWithChildren } from "react";
+import { Menu } from "@/components";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +27,7 @@ export default function RootLayout({
     <html lang="ja" className="dark">
       <body className={(inter.className, "relative")}>
         <NextUIProvider>
+          <Header />
           <Main>{children}</Main>
           <Footer />
         </NextUIProvider>
@@ -34,6 +37,22 @@ export default function RootLayout({
     </html>
   );
 }
+
+const Header = () => {
+  return (
+    <>
+      <div className="h-[40px]" />
+      <div className="flex z-40 w-full h-auto items-center justify-center data-[menu-open=true]:border-none fixed top-0 inset-x-0 backdrop-blur-lg data-[menu-open=true]:backdrop-blur-xl backdrop-saturate-150 bg-background/70">
+        <div className="w-full flex items-center justify-between max-w-sm mx-auto px-4 py-2">
+          <Link className="text-tiny text-white/80" href="/">
+            THE+BETH
+          </Link>
+          <Menu />
+        </div>
+      </div>
+    </>
+  );
+};
 
 const Main = ({ children }: PropsWithChildren) => {
   return (
