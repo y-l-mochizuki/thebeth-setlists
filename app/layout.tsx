@@ -6,12 +6,9 @@ import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { PropsWithChildren } from "react";
 import Link from "next/link";
 import { Menu } from "@/app/_root/_components";
+import { SITE_INFO } from "@/const";
 
 const inter = Inter({ subsets: ["latin"] });
-
-const SITE_INFO = {
-  TITLE: "THE+BETH SETLISTS",
-};
 
 export const metadata: Metadata = {
   title: SITE_INFO.TITLE,
