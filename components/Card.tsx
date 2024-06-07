@@ -28,6 +28,8 @@ export const Card = ({ href, image, title, date }: CardProps) => {
             src={image.url}
             alt={title}
             fill
+            sizes="160px"
+            priority
           />
         )}
       </NextUICard>
