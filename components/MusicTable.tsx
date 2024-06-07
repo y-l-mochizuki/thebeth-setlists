@@ -2,10 +2,6 @@
 
 import { Music } from "@/utils/api";
 import {
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  Modal as NextUIModal,
   Table,
   TableBody,
   TableCell,
@@ -16,6 +12,7 @@ import {
 } from "@nextui-org/react";
 import React, { ComponentProps, useState } from "react";
 import { twMerge } from "@/utils/tailwind-merge";
+import { Drawer } from "@/components";
 
 type Props = {
   musics: Music[];
@@ -31,7 +28,12 @@ export const MusicTable = ({ musics }: Props) => {
 
   return (
     <>
-      <Table hideHeader>
+      <Table
+        hideHeader
+        classNames={{
+          wrapper: "bg-opacity-50",
+        }}
+      >
         <TableHeader>
           <TableColumn>NAME</TableColumn>
         </TableHeader>
@@ -66,7 +68,7 @@ export const MusicTable = ({ musics }: Props) => {
 };
 
 type ModalProps = Pick<
-  ComponentProps<typeof NextUIModal>,
+  ComponentProps<typeof Drawer>,
   "isOpen" | "onOpenChange"
 > & {
   music: Music;
@@ -74,37 +76,12 @@ type ModalProps = Pick<
 
 const Modal = ({ music, ...props }: ModalProps) => {
   return (
-    <NextUIModal
-      {...props}
-      backdrop="blur"
-      placement="center"
-      className="min-h-[25%] m-4"
-      motionProps={{
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        exit: { opacity: 0 },
-      }}
-    >
-      <ModalContent>
-        {() => (
-          <>
-            <ModalHeader className="flex flex-col gap-1">
-              {music.title}
-            </ModalHeader>
-            <ModalBody className="pt-0 pb-6 gap-6 overflow-hidden">
-              {music.iframe_strings !== null &&
-                music.iframe_strings.map((v, i) => (
-                  <IframeComponent
-                    className="-mx-6"
-                    iframeString={v.src}
-                    key={i}
-                  />
-                ))}
-            </ModalBody>
-          </>
-        )}
-      </ModalContent>
-    </NextUIModal>
+    <Drawer {...props} title={music.title}>
+      {music.iframe_strings !== null &&
+        music.iframe_strings.map((v, i) => (
+          <IframeComponent className="-mx-6" iframeString={v.src} key={i} />
+        ))}
+    </Drawer>
   );
 };
 
@@ -127,7 +104,7 @@ const IframeComponent = ({ iframeString, className }: IframeComponentProps) => {
     <div
       className={twMerge(
         "[&>iframe]:w-full [&>iframe]:h-auto [&>iframe]:aspect-video",
-        className
+        className,
       )}
       dangerouslySetInnerHTML={{ __html: iframeString }}
     />
