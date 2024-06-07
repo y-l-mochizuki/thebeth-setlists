@@ -32,7 +32,7 @@ export const Card = ({ href, image, title, date }: CardProps) => {
         )}
       </NextUICard>
       <div>
-        <h2 className="font-bold text-base line-clamp-1 text-white/80">
+        <h2 className="font-bold text-base line-clamp-1 text-white/95">
           {title}
         </h2>
         {!!date && <p className="opacity-50 text-sm">{toJstDate(date)}</p>}

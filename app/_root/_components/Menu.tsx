@@ -51,7 +51,11 @@ const MenuItem = ({
 }: PropsWithChildren & {
   onClick: () => void;
 }) => (
-  <button className="text-left text-sm" onClick={onClick} type="button">
+  <button
+    className="text-left text-sm text-white/95"
+    onClick={onClick}
+    type="button"
+  >
     {children}
   </button>
 );
@@ -64,7 +68,7 @@ const ExternalLink = ({
 }) => {
   return (
     <a
-      className="flex items-center gap-0.5 text-sm"
+      className="flex items-center gap-0.5 text-sm text-white/95"
       href={href}
       target="_blank"
     >

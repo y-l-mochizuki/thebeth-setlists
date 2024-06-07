@@ -15,7 +15,7 @@ export default async function Home({ params }: Props) {
   const musicLenght = setlist.musics.length;
   type Links = typeof setlist.purchase_links;
   const hasValidPurchaseLinks = (
-    links: Links
+    links: Links,
   ): links is Exclude<Links, undefined> => {
     return !!links && links.length > 0;
   };
@@ -31,13 +31,14 @@ export default async function Home({ params }: Props) {
                 src={setlist.image.url}
                 alt={setlist.title}
                 fill
+                priority
               />
             )}
           </Card>
         </div>
         <div className="grid gap-4 mt-4">
           <div>
-            <h1 className="text-xl font-bold">{setlist.title}</h1>
+            <h1 className="text-xl font-bold text-white/95">{setlist.title}</h1>
             <div className="opacity-50 mt-1">
               {!!setlist.live_date && (
                 <p>開催日: {toJstDate(setlist.live_date)}</p>
