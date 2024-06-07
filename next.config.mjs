@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "/public",
   images: {
     domains: ["images.microcms-assets.io"],
   },
