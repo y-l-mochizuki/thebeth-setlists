@@ -9,9 +9,22 @@ import { Menu } from "@/app/_root/_components";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const SITE_INFO = {
+  TITLE: "THE+BETH SETLISTS",
+};
+
 export const metadata: Metadata = {
-  title: "thebeth setlists",
-  description: "thebeth setlists",
+  title: SITE_INFO.TITLE,
+  description: SITE_INFO.TITLE,
+  openGraph: {
+    title: SITE_INFO.TITLE,
+    siteName: SITE_INFO.TITLE,
+    type: "website",
+    images: ["https://thebeth-setlists.vercel.app/api/ogp"],
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export const viewport: Viewport = {
