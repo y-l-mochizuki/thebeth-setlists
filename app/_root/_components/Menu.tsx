@@ -16,7 +16,7 @@ export const Menu = () => {
   const handleClick = (url: string) => {
     onClose();
     setTimeout(() => {
-      router.push(url, { scroll: false });
+      router.push(url);
     }, 500);
   };
 
