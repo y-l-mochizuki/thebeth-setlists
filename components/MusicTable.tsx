@@ -44,7 +44,7 @@ export const MusicTable = ({ musics }: Props) => {
               v.iframe_strings !== null && v.iframe_strings.length > 0;
             return (
               <TableRow key={v.id}>
-                <TableCell>
+                <TableCell className="text-white/95">
                   <button
                     type="button"
                     onClick={hasModalContent ? () => handleClick(v) : undefined}

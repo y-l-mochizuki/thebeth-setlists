@@ -12,11 +12,11 @@ type Props = {
 
 export default async function Home({ params }: Props) {
   const album = await getTheBethAlbum(params.albumId);
-  const musicLenght = album.musics.length;
+  const musicLength = album.musics.length;
 
   type Links = typeof album.purchase_links;
   const hasValidPurchaseLinks = (
-    links: Links
+    links: Links,
   ): links is Exclude<Links, undefined> => {
     return !!links && links.length > 0;
   };
@@ -32,6 +32,7 @@ export default async function Home({ params }: Props) {
                 src={album.image.url}
                 alt={album.title}
                 fill
+                priority
               />
             )}
           </Card>
@@ -39,12 +40,12 @@ export default async function Home({ params }: Props) {
 
         <div className="grid gap-4 mt-4">
           <div>
-            <h1 className="text-xl font-bold">{album.title}</h1>
+            <h1 className="text-xl font-bold text-white/95">{album.title}</h1>
             <div className="opacity-50 mt-1">
               {!!album.release_date && (
                 <p>発売日: {toJstDate(album.release_date)}</p>
               )}
-              <p>楽曲数: {musicLenght}</p>
+              <p>楽曲数: {musicLength}</p>
             </div>
           </div>
 
