@@ -5,7 +5,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { PropsWithChildren } from "react";
 import Link from "next/link";
-import { Menu } from "@/app/_root/_components";
+import { Menu, ScrollRef } from "@/app/_root/_components";
 import { SITE_INFO } from "@/const";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -37,6 +37,7 @@ export default function RootLayout({
     <html lang="ja" className="dark">
       <body className={(inter.className, "relative")}>
         <NextUIProvider>
+          <ScrollRef />
           <Header />
           <Main>{children}</Main>
           <Footer />
