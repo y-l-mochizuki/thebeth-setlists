@@ -26,18 +26,17 @@ export const Menu = () => {
         <MenuIcon size={24} strokeWidth={1} className="text-white/80" />
       </button>
       <Drawer title="MENU" isOpen={isOpen} onOpenChange={onOpenChange}>
-        <div className="grid gap-4">
-          <MenuItem onClick={() => handleClick("/setlists")}>
-            セットリスト一覧
-          </MenuItem>
-          <MenuItem onClick={() => handleClick("/albums")}>
-            アルバム一覧
-          </MenuItem>
+        <div className="grid gap-4 justify-items-start">
+          <MenuItem onClick={() => handleClick("/setlists")}>SETLISTS</MenuItem>
+          <MenuItem onClick={() => handleClick("/albums")}>ALBUMS</MenuItem>
           <ExternalLink href="https://thebeth.jp/">
-            オフィシャルサイト
+            OFFICIAL WEB SITE
           </ExternalLink>
           <ExternalLink href="https://thebeth.official.ec/">
-            オフィシャル WEB ショップ
+            OFFICIAL WEB SHOP
+          </ExternalLink>
+          <ExternalLink href="https://www.youtube.com/@THEBETHOffcial-">
+            OFFICIAL YouTube CHANNEL
           </ExternalLink>
         </div>
       </Drawer>
@@ -52,7 +51,7 @@ const MenuItem = ({
   onClick: () => void;
 }) => (
   <button
-    className="text-left text-sm text-white/95"
+    className="text-left text-white/50 font-bold"
     onClick={onClick}
     type="button"
   >
@@ -68,15 +67,15 @@ const ExternalLink = ({
 }) => {
   return (
     <a
-      className="flex items-center gap-0.5 text-sm text-white/95"
+      className="flex items-center gap-1 text-white/50 font-bold"
       href={href}
       target="_blank"
     >
       {children}
       <ExternalLinkIcon
-        size={16}
-        strokeWidth={1}
-        className="text-white/80 -mt-0.25"
+        size={20}
+        strokeWidth={2}
+        className="text-white/50 -mt-0.5"
       />
     </a>
   );

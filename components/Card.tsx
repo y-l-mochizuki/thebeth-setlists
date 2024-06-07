@@ -28,11 +28,13 @@ export const Card = ({ href, image, title, date }: CardProps) => {
             src={image.url}
             alt={title}
             fill
+            sizes="160px"
+            priority
           />
         )}
       </NextUICard>
       <div>
-        <h2 className="font-bold text-base line-clamp-1 text-white/95">
+        <h2 className="font-bold text-sm line-clamp-1 text-white/95">
           {title}
         </h2>
         {!!date && <p className="opacity-50 text-sm">{toJstDate(date)}</p>}
