@@ -1,7 +1,7 @@
-import { getTheBethAlbum } from "@/utils/api";
 import Image from "next/image";
 import { Card } from "@nextui-org/react";
 import { identifyURL, toJstDate } from "@/utils/format";
+import { getTheBethAlbum } from "@/utils/api";
 import { MusicTable } from "@/components";
 
 type Props = {

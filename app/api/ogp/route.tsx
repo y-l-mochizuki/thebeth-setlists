@@ -1,8 +1,16 @@
 import { ImageResponse } from "@vercel/og";
+import { NextRequest } from "next/server";
 
 export const runtime = "edge";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const url = new URL(req.url);
+  const searchParams = new URLSearchParams(url.search);
+  const searchQueryTitle = searchParams.get("title") || "";
+  const OGPTitle = !!searchQueryTitle
+    ? `THE+BETH ${searchQueryTitle}`
+    : "THE+BETH SETLISTS";
+
   return new ImageResponse(
     (
       <div
@@ -27,7 +35,7 @@ export async function GET() {
             whiteSpace: "pre-wrap",
           }}
         >
-          THE+BETH SETLISTS
+          {OGPTitle}
         </div>
       </div>
     ),

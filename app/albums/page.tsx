@@ -1,5 +1,5 @@
-import { Card } from "@/components";
 import { getTheBethAlbums } from "@/utils/api";
+import { Card } from "@/components";
 
 export default async function Home() {
   const albums = await getTheBethAlbums();
