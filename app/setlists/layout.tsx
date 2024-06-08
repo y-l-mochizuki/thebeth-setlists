@@ -9,6 +9,7 @@ export default function Page({ children }: PropsWithChildren) {
 export const generateMetadata = async () => {
   const encStr = encodeURIComponent(PAGE_INFO.SETLISTS.NAME);
   return {
+    title: `${SITE_INFO.TITLE} | ${PAGE_INFO.SETLISTS.NAME}`,
     openGraph: {
       images: [`${SITE_INFO.DOMAIN}/api/ogp?title=${encStr}`],
     },
