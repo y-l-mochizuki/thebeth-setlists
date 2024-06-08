@@ -13,6 +13,7 @@ import {
 import React, { ComponentProps, useState } from "react";
 import { twMerge } from "@/utils/tailwind-merge";
 import { Drawer } from "@/components";
+import { PlayerPlay } from "tabler-icons-react";
 
 type Props = {
   musics: Music[];
@@ -51,11 +52,13 @@ export const MusicTable = ({ musics }: Props) => {
                   </span>
                   <button
                     type="button"
+                    className="flex items-center gap-1"
                     onClick={hasModalContent ? () => handleClick(v) : undefined}
                   >
                     <span className={twMerge(hasModalContent && "underline")}>
                       {v.title}
                     </span>
+                    {hasModalContent && <PlayableIcon />}
                   </button>
                 </TableCell>
               </TableRow>
@@ -113,3 +116,14 @@ const IframeComponent = ({ iframeString, className }: IframeComponentProps) => {
     />
   );
 };
+
+const PlayableIcon = () => (
+  <div className="border rounded-full bg-white/95">
+    <PlayerPlay
+      className="translate-x-[0.25px]"
+      size={14}
+      strokeWidth={1}
+      fill="black"
+    />
+  </div>
+);
