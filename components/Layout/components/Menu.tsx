@@ -1,7 +1,7 @@
 "use client";
 
 import React, { PropsWithChildren } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useDisclosure } from "@nextui-org/react";
 import {
   ExternalLink as ExternalLinkIcon,
@@ -9,8 +9,10 @@ import {
 } from "tabler-icons-react";
 import { Drawer } from "@/components";
 import { OFFICIAL_INFO, PAGE_INFO, SUBSCRIPTION_INFO } from "@/const";
+import { twMerge } from "tailwind-merge";
 
 export const Menu = () => {
+  const pathname = usePathname();
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const router = useRouter();
 
@@ -29,7 +31,11 @@ export const Menu = () => {
       <Drawer title="MENU" isOpen={isOpen} onOpenChange={onOpenChange}>
         <div className="grid gap-4 justify-items-start">
           {Object.values(PAGE_INFO).map((v, i) => (
-            <MenuItem onClick={() => handleClick(v.URL)} key={i}>
+            <MenuItem
+              onClick={() => handleClick(v.URL)}
+              isActive={v.URL === pathname}
+              key={i}
+            >
               {v.NAME}
             </MenuItem>
           ))}
@@ -58,14 +64,19 @@ const Heading = ({ children }: PropsWithChildren) => (
 );
 
 const MenuItem = ({
+  isActive,
   onClick,
   children,
 }: PropsWithChildren & {
+  isActive: boolean;
   onClick: () => void;
 }) => (
   <button
-    className="text-left text-white/50 font-bold"
-    onClick={onClick}
+    className={twMerge(
+      "text-left text-white/50 font-bold",
+      isActive && "text-yellow-500 cursor-default",
+    )}
+    onClick={isActive ? undefined : onClick}
     type="button"
   >
     {children}

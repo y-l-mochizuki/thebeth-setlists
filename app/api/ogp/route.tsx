@@ -1,3 +1,4 @@
+import { PAGE_INFO, SITE_INFO } from "@/const";
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 
@@ -8,8 +9,8 @@ export async function GET(req: NextRequest) {
   const searchParams = new URLSearchParams(url.search);
   const searchQueryTitle = searchParams.get("title") || "";
   const OGPTitle = !!searchQueryTitle
-    ? `THE+BETH ${searchQueryTitle}`
-    : "THE+BETH SETLISTS";
+    ? `${SITE_INFO.TITLE} ${searchQueryTitle}`
+    : SITE_INFO.TITLE;
 
   return new ImageResponse(
     (
