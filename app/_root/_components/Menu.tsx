@@ -8,6 +8,7 @@ import {
   Menu as MenuIcon,
 } from "tabler-icons-react";
 import { Drawer } from "@/components";
+import { OFFICIAL_INFO, PAGE_INFO, SUBSCRIPTION_INFO } from "@/const";
 
 export const Menu = () => {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
@@ -27,22 +28,34 @@ export const Menu = () => {
       </button>
       <Drawer title="MENU" isOpen={isOpen} onOpenChange={onOpenChange}>
         <div className="grid gap-4 justify-items-start">
-          <MenuItem onClick={() => handleClick("/setlists")}>SETLISTS</MenuItem>
-          <MenuItem onClick={() => handleClick("/albums")}>ALBUMS</MenuItem>
-          <ExternalLink href="https://thebeth.jp/">
-            OFFICIAL WEB SITE
-          </ExternalLink>
-          <ExternalLink href="https://thebeth.official.ec/">
-            OFFICIAL WEB SHOP
-          </ExternalLink>
-          <ExternalLink href="https://www.youtube.com/@THEBETHOffcial-">
-            OFFICIAL YouTube CHANNEL
-          </ExternalLink>
+          {Object.values(PAGE_INFO).map((v, i) => (
+            <MenuItem onClick={() => handleClick(v.URL)} key={i}>
+              {v.NAME}
+            </MenuItem>
+          ))}
+
+          <Heading>OFFICIAL</Heading>
+          {Object.values(OFFICIAL_INFO).map((v, i) => (
+            <ExternalLink href={v.URL} key={i}>
+              {v.NAME}
+            </ExternalLink>
+          ))}
+
+          <Heading>SUBSCRIPTION</Heading>
+          {Object.values(SUBSCRIPTION_INFO).map((v, i) => (
+            <ExternalLink href={v.URL} key={i}>
+              {v.NAME}
+            </ExternalLink>
+          ))}
         </div>
       </Drawer>
     </>
   );
 };
+
+const Heading = ({ children }: PropsWithChildren) => (
+  <p className="font-bold pt-4 text-white/95">{children}</p>
+);
 
 const MenuItem = ({
   onClick,
