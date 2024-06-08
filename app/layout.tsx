@@ -55,7 +55,7 @@ const Header = () => {
       <div className="h-[40px]" />
       <div className="z-10 w-full h-auto fixed top-0 inset-x-0 backdrop-blur-md bg-content1 bg-opacity-50">
         <div className="w-full flex items-center justify-between max-w-sm mx-auto px-4 py-2">
-          <Link className="text-tiny text-white/95" href="/">
+          <Link className="text-tiny text-white/95 font-bold" href="/">
             THE+BETH
           </Link>
           <Menu />
