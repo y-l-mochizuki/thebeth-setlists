@@ -24,7 +24,7 @@ export const Menu = () => {
   return (
     <>
       <button onClick={onOpen} type="button">
-        <MenuIcon size={24} strokeWidth={1} className="text-white/80" />
+        <MenuIcon size={24} strokeWidth={2} className="text-white/95" />
       </button>
       <Drawer title="MENU" isOpen={isOpen} onOpenChange={onOpenChange}>
         <div className="grid gap-4 justify-items-start">
