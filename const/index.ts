@@ -1,16 +1,16 @@
 export const SITE_INFO = {
-  TITLE: "THE+BETH SETLISTS",
+  TITLE: "THE+BETH",
   DOMAIN: "https://thebeth-setlists.vercel.app",
 };
 
 export const PAGE_INFO = {
   SETLISTS: {
     URL: "/setlists",
-    NAME: "SETLISTS",
+    NAME: "SETLIST",
   },
   ALBUMS: {
     URL: "/albums",
-    NAME: "ALBUMS",
+    NAME: "ALBUM",
   },
 };
 
