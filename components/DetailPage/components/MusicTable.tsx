@@ -31,7 +31,7 @@ export const MusicTable = ({ musics }: Props) => {
       <Table
         hideHeader
         classNames={{
-          wrapper: "bg-opacity-50",
+          wrapper: "bg-opacity-50 px-0",
         }}
       >
         <TableHeader>
@@ -42,14 +42,17 @@ export const MusicTable = ({ musics }: Props) => {
             const order = i + 1;
             const hasModalContent =
               v.iframe_strings !== null && v.iframe_strings.length > 0;
+
             return (
               <TableRow key={v.id}>
-                <TableCell className="text-white/95">
+                <TableCell className="text-white/95 flex gap-1">
+                  <span className="inline-block min-w-[1.5em] text-white/50 text-center">
+                    {order}
+                  </span>
                   <button
                     type="button"
                     onClick={hasModalContent ? () => handleClick(v) : undefined}
                   >
-                    {order}.{" "}
                     <span className={twMerge(hasModalContent && "underline")}>
                       {v.title}
                     </span>
