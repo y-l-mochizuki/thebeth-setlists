@@ -74,9 +74,9 @@ const MenuItem = ({
   <button
     className={twMerge(
       "text-left text-white/50 font-bold",
-      isActive && "text-yellow-500",
+      isActive && "text-yellow-500 cursor-default",
     )}
-    onClick={onClick}
+    onClick={isActive ? undefined : onClick}
     type="button"
   >
     {children}
