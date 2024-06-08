@@ -87,7 +87,7 @@ type TagListProps = {
 const TagList = ({ title, list }: TagListProps) => {
   return (
     <div>
-      <p className="text-center">{title}</p>
+      <p className="text-center text-white/95">{title}</p>
       <ul className="flex flex-wrap gap-2 justify-center">
         {list.map((v, i) => (
           <li key={i}>

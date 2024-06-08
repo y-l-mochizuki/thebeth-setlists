@@ -54,7 +54,7 @@ export const Menu = () => {
 };
 
 const Heading = ({ children }: PropsWithChildren) => (
-  <p className="font-bold pt-4 text-white/95">{children}</p>
+  <p className="font-bold pt-4 text-white/95 text-lg">{children}</p>
 );
 
 const MenuItem = ({
