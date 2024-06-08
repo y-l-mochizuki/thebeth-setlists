@@ -1,5 +1,5 @@
 import { Card } from "@/components";
-import { Setlist, getTheBethSetlists } from "@/utils/api";
+import { getTheBethSetlists } from "@/utils/api";
 
 export default async function Home() {
   const setlists = await getTheBethSetlists();

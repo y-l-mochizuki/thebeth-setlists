@@ -9,6 +9,7 @@ import {
   isAlbumTypeWithReleaseDate,
   isSetlistTypeWithLiveDate,
 } from "./helper";
+import { SUBSCRIPTION_INFO } from "@/const";
 
 type Props = {
   content: AlbumType | Setlist;
@@ -49,23 +50,22 @@ export const DetailPage = ({ content }: Props) => {
           </div>
 
           {hasValidPurchaseLinks(content.purchase_links) && (
-            <div>
-              <p className="text-center">購入先リンク</p>
-              <ul className="flex flex-wrap gap-2 justify-center">
-                {content.purchase_links.map((v, i) => (
-                  <li key={i}>
-                    <a
-                      className="text-yellow-500 underline"
-                      href={v.link}
-                      target="_blank"
-                    >
-                      #{identifyURL(v.link)}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <TagList
+              title="WEB SHOP"
+              list={content.purchase_links.map((v) => ({
+                href: v.link,
+                name: identifyURL(v.link),
+              }))}
+            />
           )}
+
+          <TagList
+            title="SUBSCRIPTION"
+            list={Object.values(SUBSCRIPTION_INFO).map((v) => ({
+              href: v.URL,
+              name: v.NAME,
+            }))}
+          />
         </div>
       </div>
 
@@ -73,5 +73,34 @@ export const DetailPage = ({ content }: Props) => {
         <MusicTable musics={content.musics} />
       </div>
     </>
+  );
+};
+
+type TagListProps = {
+  title: string;
+  list: {
+    href: string;
+    name: string;
+  }[];
+};
+
+const TagList = ({ title, list }: TagListProps) => {
+  return (
+    <div>
+      <p className="text-center text-white/95">{title}</p>
+      <ul className="flex flex-wrap gap-2 justify-center">
+        {list.map((v, i) => (
+          <li key={i}>
+            <a
+              className="text-yellow-500 underline"
+              href={v.href}
+              target="_blank"
+            >
+              #{v.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };

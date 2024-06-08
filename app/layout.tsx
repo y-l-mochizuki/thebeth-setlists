@@ -75,7 +75,7 @@ const Footer = () => {
   const packageJson = require("../package.json");
   return (
     <footer className="px-4 pb-4">
-      <div className="text-right">
+      <div className="text-center">
         <span className="opacity-50 text-xs">
           version: {packageJson.version}
         </span>
