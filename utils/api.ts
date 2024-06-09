@@ -38,6 +38,7 @@ export const getTheBethSetlists = async (): Promise<Setlist[]> => {
       endpoint: "setlists",
       queries: {
         orders: "-live_date", // 開催日の降順
+        limit: 100, // 最大取得件数
       },
       customRequestInit,
     });
@@ -85,6 +86,7 @@ export const getTheBethAlbums = async (): Promise<AlbumType[]> => {
       endpoint: "albums",
       queries: {
         orders: "-release_date", // 開催日の降順
+        limit: 100, // 最大取得件数
       },
       customRequestInit,
     });
