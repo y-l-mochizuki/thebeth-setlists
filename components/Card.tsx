@@ -28,13 +28,13 @@ export const Card = ({ href, image, title, date }: CardProps) => {
             src={image.url}
             alt={title}
             fill
-            sizes="160px"
+            sizes="168px"
             priority
           />
         )}
       </NextUICard>
       <div>
-        <h2 className="font-bold text-sm line-clamp-1 text-white/95">
+        <h2 className="font-bold text-sm line-clamp-2 text-white/95">
           {title}
         </h2>
         {!!date && <p className="opacity-50 text-sm">{toJstDate(date)}</p>}
@@ -44,7 +44,7 @@ export const Card = ({ href, image, title, date }: CardProps) => {
 };
 
 const CardList = ({ children }: PropsWithChildren) => {
-  return <div className="w-full grid grid-cols-2 gap-8">{children}</div>;
+  return <div className="w-full grid grid-cols-2 gap-4">{children}</div>;
 };
 
 Card.List = CardList;
