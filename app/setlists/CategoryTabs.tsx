@@ -15,7 +15,8 @@ export const CategoryTabs = ({ all, thebest_thebeth, taiban }: Props) => {
         base: "w-full ",
         tabList: "w-full bg-opacity-80",
         panel: "p-0",
-        tabContent: "group-data-[selected=true]:text-white/95 text-xs",
+        tabContent:
+          "group-data-[selected=true]:text-white/95 text-xs font-bold",
         cursor: "dark:bg-opacity-80",
       }}
     >
