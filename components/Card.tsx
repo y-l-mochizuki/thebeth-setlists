@@ -12,7 +12,7 @@ type CardProps = {
   image?: Image | null;
   title: string;
   date?: string;
-  isExternal?: boolean;
+  isExternal?: boolean; // FIXME: ザ・ベストザベスFINALが終わったら削除する
 };
 
 export const Card = ({ href, image, title, date, isExternal }: CardProps) => {
@@ -21,7 +21,7 @@ export const Card = ({ href, image, title, date, isExternal }: CardProps) => {
       className="content-start grid h-auto bg-transparent border-0 p-0 justify-stretch rounded-none whitespace-pre-wrap"
       as={Link}
       href={href}
-      target={isExternal ? "_blank" : undefined}
+      target={isExternal ? "_blank" : undefined} // FIXME: ザ・ベストザベスFINALが終わったら削除する
     >
       <NextUICard className="w-full aspect-square relative">
         {!!image && (

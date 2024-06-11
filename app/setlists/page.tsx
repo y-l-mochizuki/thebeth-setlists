@@ -7,6 +7,7 @@ type ExpansionSetlist = Setlist & {
   href?: string;
 };
 
+// FIXME: ザ・ベストザベスFINALが終わったら削除する
 const thebest_thebeth_final = {
   id: "thebest_thebeth_final",
   title: "ザ・ベストザベスFINAL",
@@ -27,7 +28,7 @@ const thebest_thebeth_final = {
 
 export default async function Home() {
   const setlists = await getTheBethSetlists();
-  const addedThebestThebethFinal = [thebest_thebeth_final, ...setlists];
+  const addedThebestThebethFinal = [thebest_thebeth_final, ...setlists]; // FIXME: ザ・ベストザベスFINALが終わったら削除する
   const filteredTheBethSetlists = addedThebestThebethFinal.filter(
     (setlist) => setlist.category?.thebest_thebeth,
   );
@@ -57,7 +58,7 @@ const Tab = ({ setlists }: TabProps) => {
           {...setlist}
           href={
             setlist.isExternal && setlist.href
-              ? setlist.href
+              ? setlist.href // FIXME: ザ・ベストザベスFINALが終わったら削除する
               : `/setlists/${setlist.id}`
           }
           date={setlist.live_date}
