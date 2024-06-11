@@ -42,7 +42,7 @@ export const Header = ({ title }: HeaderProps) => {
 
 const Main = ({ children }: PropsWithChildren) => {
   return (
-    <main className="max-w-sm mx-auto px-4 py-8 min-h-full">{children}</main>
+    <main className="max-w-sm mx-auto p-4 pb-8 min-h-full">{children}</main>
   );
 };
 

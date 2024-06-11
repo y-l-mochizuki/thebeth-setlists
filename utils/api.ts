@@ -11,6 +11,11 @@ export type Music = {
   iframe_strings: IframeString[] | null;
 };
 
+type Category = {
+  thebest_thebeth: boolean;
+  taiban: boolean;
+};
+
 export type Setlist = {
   id: string;
   title: string;
@@ -24,6 +29,7 @@ export type Setlist = {
   purchase_links?: {
     link: string;
   }[];
+  category?: Category;
 };
 
 const customRequestInit = {
