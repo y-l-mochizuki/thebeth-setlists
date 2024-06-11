@@ -19,22 +19,26 @@ const thebest_thebeth_final = {
     width: 168,
     height: 168,
   },
+  category: {
+    thebest_thebeth: true,
+    taiban: false,
+  },
 } satisfies ExpansionSetlist;
 
 export default async function Home() {
   const setlists = await getTheBethSetlists();
-  const filteredTheBethSetlists = [
-    thebest_thebeth_final,
-    ...setlists.filter((setlist) => setlist.category?.thebest_thebeth),
-  ];
-  const filteredTaibanSetlists = setlists.filter(
+  const addedThebestThebethFinal = [thebest_thebeth_final, ...setlists];
+  const filteredTheBethSetlists = addedThebestThebethFinal.filter(
+    (setlist) => setlist.category?.thebest_thebeth,
+  );
+  const filteredTaibanSetlists = addedThebestThebethFinal.filter(
     (setlist) => setlist.category?.taiban,
   );
 
   return (
     <div className="grid gap-4">
       <CategoryTabs
-        all={<Tab setlists={setlists} />}
+        all={<Tab setlists={addedThebestThebethFinal} />}
         thebest_thebeth={<Tab setlists={filteredTheBethSetlists} />}
         taiban={<Tab setlists={filteredTaibanSetlists} />}
       />
