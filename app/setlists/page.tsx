@@ -1,6 +1,6 @@
 import { Setlist, getTheBethSetlists } from "@/utils/api";
 import { Card } from "@/components";
-import { CategoryTabs } from "./CategoryTabs";
+import { CategoryTabs } from "./_components";
 
 export default async function Home() {
   const setlists = await getTheBethSetlists();
