@@ -1,7 +1,7 @@
 "use client";
 import { Tab, Tabs } from "@nextui-org/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Key, useState } from "react";
+import { Key, Suspense, useState } from "react";
 
 type Props = {
   all: React.ReactNode;
@@ -26,41 +26,49 @@ const getTabName = (value: any): TAB_NAMES => {
 };
 
 export const CategoryTabs = ({ all, thebest_thebeth, taiban }: Props) => {
-  const searchParams = useSearchParams();
-  const search = searchParams.get("category");
-  const [selected, setSelected] = useState<TAB_NAMES>(getTabName(search));
+  const CategoryTabsContent = () => {
+    const searchParams = useSearchParams();
+    const search = searchParams.get("category");
+    const [selected, setSelected] = useState<TAB_NAMES>(getTabName(search));
 
-  const router = useRouter();
-  const pathname = usePathname();
-  const handleSelectionChange = (key: Key) => {
-    const tabName = getTabName(key);
-    setSelected(tabName);
-    router.replace(`${pathname}?category=${tabName}`);
+    const router = useRouter();
+    const pathname = usePathname();
+    const handleSelectionChange = (key: Key) => {
+      const tabName = getTabName(key);
+      setSelected(tabName);
+      router.replace(`${pathname}?category=${tabName}`);
+    };
+
+    return (
+      <Tabs
+        aria-label="Options"
+        selectedKey={selected}
+        onSelectionChange={handleSelectionChange}
+        classNames={{
+          base: "w-full ",
+          tabList: "w-full bg-opacity-80",
+          panel: "p-0",
+          tabContent:
+            "group-data-[selected=true]:text-white/95 text-xs font-bold",
+          cursor: "dark:bg-opacity-80",
+        }}
+      >
+        <Tab key={TAB_NAMES.ALL} title="ALL">
+          {all}
+        </Tab>
+        <Tab key={TAB_NAMES.THEBEST_THEBETH} title="ザ・ベストザベス">
+          {thebest_thebeth}
+        </Tab>
+        <Tab key={TAB_NAMES.TAIBAN} title="対バン">
+          {taiban}
+        </Tab>
+      </Tabs>
+    );
   };
 
   return (
-    <Tabs
-      aria-label="Options"
-      selectedKey={selected}
-      onSelectionChange={handleSelectionChange}
-      classNames={{
-        base: "w-full ",
-        tabList: "w-full bg-opacity-80",
-        panel: "p-0",
-        tabContent:
-          "group-data-[selected=true]:text-white/95 text-xs font-bold",
-        cursor: "dark:bg-opacity-80",
-      }}
-    >
-      <Tab key={TAB_NAMES.ALL} title="ALL">
-        {all}
-      </Tab>
-      <Tab key={TAB_NAMES.THEBEST_THEBETH} title="ザ・ベストザベス">
-        {thebest_thebeth}
-      </Tab>
-      <Tab key={TAB_NAMES.TAIBAN} title="対バン">
-        {taiban}
-      </Tab>
-    </Tabs>
+    <Suspense>
+      <CategoryTabsContent />
+    </Suspense>
   );
 };
