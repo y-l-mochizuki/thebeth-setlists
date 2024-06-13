@@ -19,5 +19,9 @@ const config: Config = {
   },
   darkMode: "class",
   plugins: [nextui()],
+  future: {
+    // hover をサポートしていないブラウザでは hover を無効化する
+    hoverOnlyWhenSupported: true,
+  },
 };
 export default config;
