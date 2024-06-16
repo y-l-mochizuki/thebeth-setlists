@@ -20,6 +20,7 @@ import { MusicTable } from "@/components/DetailPage/components/MusicTable";
 type Props = {
   musics: Music[];
 };
+
 // crop参考: https://codesandbox.io/p/sandbox/react-image-upload-and-crop-9tvzs?file=%2Fsrc%2Findex.js
 export const PageTemplate = ({ musics }: Props) => {
   const [imageList, setImageList] = useState<ImageListType>([]);
