@@ -118,3 +118,20 @@ export const getTheBethAlbum = async (id: string): Promise<AlbumType> => {
     throw new Error(e.message);
   }
 };
+
+export const getMusics = async (): Promise<Music[]> => {
+  try {
+    const res = await client.get({
+      endpoint: "musics",
+      customRequestInit,
+      queries: {
+        limit: 100, // 最大取得件数
+      },
+    });
+
+    return res.contents;
+  } catch (e: any) {
+    // TODO: Handle error
+    throw new Error(e.message);
+  }
+};
