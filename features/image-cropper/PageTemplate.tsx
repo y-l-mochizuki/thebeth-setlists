@@ -15,6 +15,7 @@ import { Drawer } from "@/components";
 import Image from "next/image";
 import { ImageCropper, ImageUploadingButton } from "@/features/image-cropper";
 import { ImageListType } from "react-images-uploading";
+import { MusicTable } from "@/components/DetailPage/components/MusicTable";
 
 type Props = {
   musics: Music[];
@@ -84,15 +85,15 @@ export const PageTemplate = ({ musics }: Props) => {
             <Switch />
           </div>
         </section>
-        <section>
+        <section className="grid gap-4">
           <div className="flex justify-between items-center">
             <span>曲一覧</span>
             <Button onClick={onOpenMusicDrawer}>曲を追加する</Button>
           </div>
           <div>
-            {selectedMusics.map((v) => (
-              <p key={v.id}>{v.title}</p>
-            ))}
+            {selectedMusics.length > 0 && (
+              <MusicTable musics={selectedMusics} />
+            )}
           </div>
         </section>
       </div>
