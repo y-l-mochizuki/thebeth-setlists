@@ -15,7 +15,26 @@ import { Drawer } from "@/components";
 import Image from "next/image";
 import { ImageCropper, ImageUploadingButton } from "@/features/image-cropper";
 import { ImageListType } from "react-images-uploading";
-import { MusicTable } from "@/components/DetailPage/components/MusicTable";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+  DragOverlay,
+  UniqueIdentifier,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { Menu } from "tabler-icons-react";
 
 type Props = {
   musics: Music[];
@@ -26,6 +45,32 @@ export const PageTemplate = ({ musics }: Props) => {
   const [imageList, setImageList] = useState<ImageListType>([]);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
+
+  const [activeId, setActiveId] = useState<UniqueIdentifier>();
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over) {
+      return;
+    }
+
+    if (active.id !== over.id) {
+      setSelectedMusics((items) => {
+        // UniqueIdentifierをstring型に変換
+        const activeId = String(active.id);
+        const overId = String(over.id);
+        const oldIndex = items.map((v) => v.id).indexOf(activeId);
+        const newIndex = items.map((v) => v.id).indexOf(overId);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  }
+
   const handleMusicSelectDrawerComplete = (selectedMusics: Music[]) => {
     setSelectedMusics((prev) => [...prev, ...selectedMusics]);
   };
@@ -45,7 +90,7 @@ export const PageTemplate = ({ musics }: Props) => {
 
   return (
     <>
-      <div className="grid gap-8">
+      <div className="flex flex-col gap-8">
         <section className="grid gap-4">
           <div className="w-2/4 mx-auto">
             <Card className="w-full aspect-square relative">
@@ -86,15 +131,60 @@ export const PageTemplate = ({ musics }: Props) => {
             <Switch />
           </div>
         </section>
-        <section className="grid gap-4">
+        <section className="flex flex-col gap-4">
           <div className="flex justify-between items-center">
             <span>曲一覧</span>
             <Button onClick={onOpenMusicDrawer}>曲を追加する</Button>
           </div>
-          <div>
-            {selectedMusics.length > 0 && (
-              <MusicTable musics={selectedMusics} />
-            )}
+          <div className="flex gap-2">
+            <div className="flex flex-col gap-1">
+              {selectedMusics.map((_, i) => (
+                <span className="w-6 h-14 flex items-center text-lg text-white/95">
+                  {i + 1}.
+                </span>
+              ))}
+            </div>
+            <div className="flex flex-col gap-1 flex-1 max-w-[calc(100%_-_24px)]">
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragStart={() => {
+                  const scrollElement = document.querySelector("body > *");
+                  if (!(scrollElement instanceof HTMLElement)) {
+                    return;
+                  }
+
+                  scrollElement.style.overflow = "hidden";
+                }}
+                onDragEnd={(e) => {
+                  const scrollElement = document.querySelector("body > *");
+                  if (!(scrollElement instanceof HTMLElement)) {
+                    return;
+                  }
+
+                  scrollElement.style.overflow = "";
+                  handleDragEnd(e);
+                }}
+              >
+                <SortableContext
+                  items={selectedMusics}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {selectedMusics.map((music, i) => (
+                    <SortableItem key={music.id} id={music.id} className="flex">
+                      <div className="flex items-center gap-4">
+                        <span className="flex-1 truncate">{music.title}</span>
+                        <Menu
+                          className="text-white/50"
+                          size={12}
+                          strokeWidth={1}
+                        />
+                      </div>
+                    </SortableItem>
+                  ))}
+                </SortableContext>
+              </DndContext>
+            </div>
           </div>
         </section>
       </div>
@@ -119,6 +209,41 @@ export const PageTemplate = ({ musics }: Props) => {
   );
 };
 
+{
+  /* <DndContext
+sensors={sensors}
+collisionDetection={closestCenter}
+onDragEnd={handleDragEnd}
+>
+<SortableContext
+  items={selectedMusics}
+  strategy={verticalListSortingStrategy}
+>
+  {selectedMusics.map((v, i) => (
+    <SortableItem key={v.id} id={v.id}>
+      {i}. {v.title}
+    </SortableItem>
+  ))}
+</SortableContext>
+</DndContext> */
+}
+
+export function SortableItem(props: any) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: props.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <Card className="p-4">{props.children}</Card>
+    </div>
+  );
+}
+
 type MusicSelectDrawerProps = {
   musics: Music[];
   isOpen: boolean;
@@ -141,7 +266,7 @@ const MusicSelectDrawer = ({
   return (
     <Drawer title="曲一覧" isOpen={isOpen} onOpenChange={onOpenChange}>
       <div className="grid h-full">
-        <div className="grid grid-cols-2 gap-2 overflow-y-scroll">
+        <div className="grid grid-cols-2 gap-4 overflow-y-scroll">
           {musics.map((v) => (
             <Checkbox
               className="w-full m-0 max-w-none"
