@@ -1,19 +1,16 @@
 "use client";
 
-import React, { PropsWithChildren, useState } from "react";
+import React, { useState } from "react";
 import {
   Switch,
   Input,
   DatePicker,
-  Checkbox,
   useDisclosure,
   Button,
   Card,
 } from "@nextui-org/react";
 import { Music } from "@/utils/api";
-import { Drawer } from "@/components";
 import Image from "next/image";
-import { ImageCropper, ImageUploadingButton } from "@/features/image-cropper";
 import { ImageListType } from "react-images-uploading";
 import {
   DndContext,
@@ -28,11 +25,11 @@ import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import { Menu, X } from "tabler-icons-react";
+import { MusicSelectDrawer } from "./components/MusicSelectDrawer";
+import { SortableItem } from "./components/SortableItem";
+import { ImageCropper } from "./components/ImageCropper";
 
 type Props = {
   musics: Music[];
@@ -106,7 +103,7 @@ export const PageTemplate = ({ musics }: Props) => {
               )}
             </Card>
           </div>
-          <ImageUploadingButton
+          <ImageCropper.UploadButton
             value={imageList}
             onChange={(imageList) => {
               onOpenImageCropper();
@@ -207,101 +204,6 @@ export const PageTemplate = ({ musics }: Props) => {
         complete={handleMusicSelectDrawerComplete}
       />
     </>
-  );
-};
-
-type SortableItemProps = PropsWithChildren<{
-  id: string;
-  handleSelectMusicRemoveButton: (id: string) => void;
-}>;
-
-export function SortableItem({
-  id,
-  handleSelectMusicRemoveButton,
-  children,
-}: SortableItemProps) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  return (
-    <div {...attributes} ref={setNodeRef} style={style}>
-      <Card className="h-14 p-0 relative flex-row items-center gap-4">
-        <button
-          className="h-full aspect-square flex items-center justify-center"
-          type="button"
-          onClick={() => handleSelectMusicRemoveButton(id)}
-        >
-          <X className="text-red-500" size={12} strokeWidth={1} />
-        </button>
-        <span className="flex-1 truncate">{children}</span>
-        <div
-          {...listeners}
-          className="h-full aspect-square flex items-center justify-center"
-        >
-          <Menu className="text-white/50" size={12} strokeWidth={1} />
-        </div>
-      </Card>
-    </div>
-  );
-}
-
-type MusicSelectDrawerProps = {
-  musics: Music[];
-  isOpen: boolean;
-  onOpenChange: () => void;
-  complete: (selectedMusic: Music[]) => void;
-};
-
-const MusicSelectDrawer = ({
-  musics,
-  isOpen,
-  onOpenChange,
-  complete,
-}: MusicSelectDrawerProps) => {
-  const [checked, setChecked] = useState<Music[]>([]);
-  const handleMusicsAddButton = () => {
-    complete(checked);
-    onOpenChange();
-  };
-
-  return (
-    <Drawer title="曲一覧" isOpen={isOpen} onOpenChange={onOpenChange}>
-      <div className="flex flex-col gap-8">
-        <div className="grid grid-cols-2 gap-4">
-          {musics.map((v) => (
-            <Checkbox
-              size="sm"
-              classNames={{
-                base: "w-full m-0 max-w-none flex",
-                label: "flex-1 justify-start",
-              }}
-              lineThrough
-              key={v.id}
-              value={v.id}
-              onChange={() => {
-                setChecked((prev) => {
-                  if (prev.includes(v)) {
-                    return prev.filter((m) => m.id !== v.id);
-                  }
-
-                  return [...prev, v];
-                });
-              }}
-            >
-              <span className="line-clamp-1">{v.title}</span>
-            </Checkbox>
-          ))}
-        </div>
-        <Button onClick={handleMusicsAddButton} size="lg">
-          曲を追加する
-        </Button>
-      </div>
-    </Drawer>
   );
 };
 

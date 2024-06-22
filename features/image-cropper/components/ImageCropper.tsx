@@ -3,34 +3,11 @@
 import React, { useState } from "react";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import Cropper, { Area } from "react-easy-crop";
-import { cropImage } from "./utils";
+import { cropImage } from "../utils";
 import { Button } from "@nextui-org/react";
 import { Drawer } from "@/components";
 
-type ImageUploadingButtonProps = {
-  value: ImageListType;
-  onChange: (
-    value: ImageListType,
-    addUpdatedIndex?: number[] | undefined,
-  ) => void;
-};
-
-export const ImageUploadingButton = ({
-  value,
-  onChange,
-}: ImageUploadingButtonProps) => {
-  return (
-    <ImageUploading value={value} onChange={onChange}>
-      {({ onImageUpload, onImageUpdate }) => (
-        <Button onClick={value ? onImageUpload : () => onImageUpdate(0)}>
-          画像をアップロード
-        </Button>
-      )}
-    </ImageUploading>
-  );
-};
-
-type ImageCropperProps = {
+type Props = {
   isOpen: boolean;
   onOpenChange: () => void;
   image: string | undefined;
@@ -42,7 +19,7 @@ export const ImageCropper = ({
   onOpenChange,
   image,
   onComplete,
-}: ImageCropperProps) => {
+}: Props) => {
   const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
@@ -76,3 +53,25 @@ export const ImageCropper = ({
     </Drawer>
   );
 };
+
+type UploadButtonProps = {
+  value: ImageListType;
+  onChange: (
+    value: ImageListType,
+    addUpdatedIndex?: number[] | undefined,
+  ) => void;
+};
+
+const UploadButton = ({ value, onChange }: UploadButtonProps) => {
+  return (
+    <ImageUploading value={value} onChange={onChange}>
+      {({ onImageUpload, onImageUpdate }) => (
+        <Button onClick={value ? onImageUpload : () => onImageUpdate(0)}>
+          画像をアップロード
+        </Button>
+      )}
+    </ImageUploading>
+  );
+};
+
+ImageCropper.UploadButton = UploadButton;
