@@ -1,4 +1,4 @@
-import { client } from "./microcms";
+import { client, managementClient } from "./microcms";
 
 type IframeString = {
   src: string;
@@ -12,6 +12,7 @@ export type Music = {
 };
 
 type Category = {
+  fieldId?: string;
   thebest_thebeth: boolean;
   taiban: boolean;
 };
@@ -52,6 +53,54 @@ export const getTheBethSetlists = async (): Promise<Setlist[]> => {
     return res.contents;
   } catch (e: any) {
     // TODO: Handle error
+    throw new Error(e.message);
+  }
+};
+
+export type SetlistPostData = {
+  image: string;
+  title: string;
+  category: Category;
+  live_date: string; // ISO 8601形式の日付文字列
+  musics: string[]; // music.idの配列
+  purchase_links?: {
+    link: string;
+  }[];
+};
+
+export const postImage = async (dataUrl: string): Promise<string> => {
+  const matches = dataUrl.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+
+  if (!matches || matches.length !== 3) {
+    throw new Error("Invalid image data");
+  }
+
+  const [, mimeType, base64Data] = matches;
+
+  // Base64データをバッファに変換
+  const buffer = Buffer.from(base64Data, "base64");
+
+  // MIMEタイプから拡張子を取得
+  const extension = mimeType.split("/")[1];
+  const fileName = `image_${Date.now()}.${extension}`;
+
+  const { url } = await managementClient.uploadMedia({
+    data: new Blob([buffer], { type: mimeType }),
+    name: fileName,
+  });
+
+  return url;
+};
+
+export const createThebethSetlist = async (
+  setlist: SetlistPostData,
+): Promise<void> => {
+  try {
+    const res = await client.create({
+      endpoint: "setlists",
+      content: setlist,
+    });
+  } catch (e: any) {
     throw new Error(e.message);
   }
 };
@@ -113,6 +162,23 @@ export const getTheBethAlbum = async (id: string): Promise<AlbumType> => {
     });
 
     return res;
+  } catch (e: any) {
+    // TODO: Handle error
+    throw new Error(e.message);
+  }
+};
+
+export const getMusics = async (): Promise<Music[]> => {
+  try {
+    const res = await client.get({
+      endpoint: "musics",
+      customRequestInit,
+      queries: {
+        limit: 100, // 最大取得件数
+      },
+    });
+
+    return res.contents;
   } catch (e: any) {
     // TODO: Handle error
     throw new Error(e.message);

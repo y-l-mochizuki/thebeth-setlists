@@ -30,15 +30,17 @@ export const Menu = () => {
       </button>
       <Drawer title="MENU" isOpen={isOpen} onOpenChange={onOpenChange}>
         <div className="grid gap-4 justify-items-start">
-          {Object.values(PAGE_INFO).map((v, i) => (
-            <MenuItem
-              onClick={() => handleClick(v.URL)}
-              isActive={v.URL === pathname}
-              key={i}
-            >
-              {v.NAME}
-            </MenuItem>
-          ))}
+          {Object.values(PAGE_INFO)
+            .filter((v) => v.NAME !== "ADMIN")
+            .map((v, i) => (
+              <MenuItem
+                onClick={() => handleClick(v.URL)}
+                isActive={v.URL === pathname}
+                key={i}
+              >
+                {v.NAME}
+              </MenuItem>
+            ))}
 
           <Heading>OFFICIAL</Heading>
           {Object.values(OFFICIAL_INFO).map((v, i) => (

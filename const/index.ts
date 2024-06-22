@@ -4,6 +4,10 @@ export const SITE_INFO = {
 };
 
 export const PAGE_INFO = {
+  ADMIN: {
+    URL: "/admin",
+    NAME: "ADMIN",
+  },
   SETLISTS: {
     URL: "/setlists",
     NAME: "SETLIST",
