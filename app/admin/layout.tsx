@@ -4,8 +4,6 @@ import { Layout } from "@/components";
 import { notFound } from "next/navigation";
 
 export default function Page({ children }: PropsWithChildren) {
-  // TODO: 管理者以外はアクセスできないようにする
-  notFound();
   return <Layout pageSubTitle={PAGE_INFO.ADMIN.NAME}>{children}</Layout>;
 }
 
