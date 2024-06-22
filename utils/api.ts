@@ -12,7 +12,7 @@ export type Music = {
 };
 
 type Category = {
-  fieldId: string;
+  fieldId?: string;
   thebest_thebeth: boolean;
   taiban: boolean;
 };
