@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import {
   Switch,
   Input,
@@ -23,8 +23,6 @@ import {
   useSensor,
   useSensors,
   DragEndEvent,
-  DragOverlay,
-  UniqueIdentifier,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -34,7 +32,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Menu } from "tabler-icons-react";
+import { Menu, X } from "tabler-icons-react";
 
 type Props = {
   musics: Music[];
@@ -46,7 +44,10 @@ export const PageTemplate = ({ musics }: Props) => {
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
 
-  const [activeId, setActiveId] = useState<UniqueIdentifier>();
+  const handleSelectMusicRemoveButton = (id: string) => {
+    setSelectedMusics((v) => v.filter((m) => m.id !== id));
+  };
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -125,7 +126,8 @@ export const PageTemplate = ({ musics }: Props) => {
         <section className="relative">
           <DatePicker labelPlacement="outside" size="lg" label="開催日" />
         </section>
-        <section>
+        <section className="flex flex-col gap-2">
+          <span>カテゴリ</span>
           <div className="flex justify-between">
             <span>対バン</span>
             <Switch />
@@ -170,16 +172,15 @@ export const PageTemplate = ({ musics }: Props) => {
                   items={selectedMusics}
                   strategy={verticalListSortingStrategy}
                 >
-                  {selectedMusics.map((music, i) => (
-                    <SortableItem key={music.id} id={music.id} className="flex">
-                      <div className="flex items-center gap-4">
-                        <span className="flex-1 truncate">{music.title}</span>
-                        <Menu
-                          className="text-white/50"
-                          size={12}
-                          strokeWidth={1}
-                        />
-                      </div>
+                  {selectedMusics.map((music) => (
+                    <SortableItem
+                      key={music.id}
+                      id={music.id}
+                      handleSelectMusicRemoveButton={
+                        handleSelectMusicRemoveButton
+                      }
+                    >
+                      {music.title}
                     </SortableItem>
                   ))}
                 </SortableContext>
@@ -209,28 +210,18 @@ export const PageTemplate = ({ musics }: Props) => {
   );
 };
 
-{
-  /* <DndContext
-sensors={sensors}
-collisionDetection={closestCenter}
-onDragEnd={handleDragEnd}
->
-<SortableContext
-  items={selectedMusics}
-  strategy={verticalListSortingStrategy}
->
-  {selectedMusics.map((v, i) => (
-    <SortableItem key={v.id} id={v.id}>
-      {i}. {v.title}
-    </SortableItem>
-  ))}
-</SortableContext>
-</DndContext> */
-}
+type SortableItemProps = PropsWithChildren<{
+  id: string;
+  handleSelectMusicRemoveButton: (id: string) => void;
+}>;
 
-export function SortableItem(props: any) {
+export function SortableItem({
+  id,
+  handleSelectMusicRemoveButton,
+  children,
+}: SortableItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: props.id });
+    useSortable({ id: id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -238,8 +229,23 @@ export function SortableItem(props: any) {
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Card className="p-4">{props.children}</Card>
+    <div {...attributes} ref={setNodeRef} style={style}>
+      <Card className="h-14 p-0 relative flex-row items-center gap-4">
+        <button
+          className="h-full aspect-square flex items-center justify-center"
+          type="button"
+          onClick={() => handleSelectMusicRemoveButton(id)}
+        >
+          <X className="text-red-500" size={12} strokeWidth={1} />
+        </button>
+        <span className="flex-1 truncate">{children}</span>
+        <div
+          {...listeners}
+          className="h-full aspect-square flex items-center justify-center"
+        >
+          <Menu className="text-white/50" size={12} strokeWidth={1} />
+        </div>
+      </Card>
     </div>
   );
 }
@@ -265,11 +271,15 @@ const MusicSelectDrawer = ({
 
   return (
     <Drawer title="曲一覧" isOpen={isOpen} onOpenChange={onOpenChange}>
-      <div className="grid h-full">
-        <div className="grid grid-cols-2 gap-4 overflow-y-scroll">
+      <div className="flex flex-col gap-8">
+        <div className="grid grid-cols-2 gap-4">
           {musics.map((v) => (
             <Checkbox
-              className="w-full m-0 max-w-none"
+              size="sm"
+              classNames={{
+                base: "w-full m-0 max-w-none flex",
+                label: "flex-1 justify-start",
+              }}
               lineThrough
               key={v.id}
               value={v.id}
@@ -283,15 +293,11 @@ const MusicSelectDrawer = ({
                 });
               }}
             >
-              {v.title}
+              <span className="line-clamp-1">{v.title}</span>
             </Checkbox>
           ))}
         </div>
-        <Button
-          onClick={handleMusicsAddButton}
-          size="lg"
-          className="translate-y-[50%]"
-        >
+        <Button onClick={handleMusicsAddButton} size="lg">
           曲を追加する
         </Button>
       </div>

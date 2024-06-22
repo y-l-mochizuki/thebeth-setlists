@@ -15,7 +15,7 @@ export const Drawer = ({ title, isOpen, onOpenChange, children }: Props) => {
       placement="bottom-center"
       scrollBehavior="inside"
       classNames={{
-        base: "h-[85%] bg-opacity-90",
+        base: "max-h-[95%] bg-opacity-90",
         header: "flex flex-col gap-1 text-white/95",
         body: "px-6 pt-0 pb-12 overflow-x-hidden",
         closeButton: "top-[30px] translate-y-[-50%] right-3 bg-default-100",
