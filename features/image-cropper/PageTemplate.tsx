@@ -104,13 +104,14 @@ export const PageTemplate = ({ musics }: Props) => {
     }
 
     try {
+      const base64Data = croppedImage.split(",")[1];
       const res = await fetch("/api/setlists", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          image: croppedImage,
+          image: base64Data,
           title,
           category: {
             fieldId: "category",

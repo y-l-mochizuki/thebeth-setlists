@@ -68,28 +68,35 @@ export type SetlistPostData = {
   }[];
 };
 
-export const postImage = async (dataUrl: string): Promise<string> => {
-  const matches = dataUrl.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+export const postImage = async (base64Data: string): Promise<string> => {
+  try {
+    // MIMEタイプの検出（この例ではJPEGを想定）
+    const mimeType = "image/jpeg";
 
-  if (!matches || matches.length !== 3) {
-    throw new Error("Invalid image data");
+    // Base64データをバッファに変換
+    const buffer = Buffer.from(base64Data, "base64");
+
+    // ファイル名の生成
+    const fileName = `image_${Date.now()}.jpg`;
+
+    // バッファをBlobに変換
+    const blob = new Blob([buffer], { type: mimeType });
+
+    // microCMSにアップロード
+    const { url } = await managementClient.uploadMedia({
+      data: blob,
+      name: fileName,
+    });
+
+    return url;
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    if (error instanceof Error) {
+      throw new Error(`Failed to upload image: ${error.message}`);
+    } else {
+      throw new Error("An unknown error occurred while uploading the image");
+    }
   }
-
-  const [, mimeType, base64Data] = matches;
-
-  // Base64データをバッファに変換
-  const buffer = Buffer.from(base64Data, "base64");
-
-  // MIMEタイプから拡張子を取得
-  const extension = mimeType.split("/")[1];
-  const fileName = `image_${Date.now()}.${extension}`;
-
-  const { url } = await managementClient.uploadMedia({
-    data: new Blob([buffer], { type: mimeType }),
-    name: fileName,
-  });
-
-  return url;
 };
 
 export const createThebethSetlist = async (

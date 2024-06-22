@@ -27,6 +27,7 @@ const getSafeArea = async (imageWidth: number, imageHeight: number) => {
 
   return safeArea;
 };
+
 const createImage = (url: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
     const image = new Image();
