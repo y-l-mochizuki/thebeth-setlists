@@ -24,9 +24,9 @@ export function SortableItem({
 
   return (
     <div {...attributes} ref={setNodeRef} style={style}>
-      <Card className="h-14 p-0 relative flex-row items-center gap-4">
+      <Card className="h-14 py-0 relative flex-row items-center">
         <button
-          className="h-full aspect-square flex items-center justify-center"
+          className="h-full px-2 flex items-center justify-center"
           type="button"
           onClick={() => handleSelectMusicRemoveButton(id)}
         >

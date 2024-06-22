@@ -235,7 +235,9 @@ export const PageTemplate = ({ musics }: Props) => {
                 sensors={sensors}
                 collisionDetection={closestCenter}
                 onDragStart={() => {
-                  const scrollElement = document.querySelector("body > div");
+                  const scrollElement = document.querySelector(
+                    "body > [data-overlay-container]",
+                  );
                   if (!(scrollElement instanceof HTMLElement)) {
                     return;
                   }
@@ -243,7 +245,9 @@ export const PageTemplate = ({ musics }: Props) => {
                   scrollElement.style.overflow = "hidden";
                 }}
                 onDragEnd={(e) => {
-                  const scrollElement = document.querySelector("body > div");
+                  const scrollElement = document.querySelector(
+                    "body > [data-overlay-container]",
+                  );
                   if (!(scrollElement instanceof HTMLElement)) {
                     return;
                   }

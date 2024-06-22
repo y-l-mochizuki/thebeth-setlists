@@ -1,4 +1,4 @@
-import { client } from "./microcms";
+import { client, managementClient } from "./microcms";
 
 type IframeString = {
   src: string;
@@ -68,6 +68,30 @@ export type SetlistPostData = {
   }[];
 };
 
+export const postImage = async (dataUrl: string): Promise<string> => {
+  const matches = dataUrl.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+
+  if (!matches || matches.length !== 3) {
+    throw new Error("Invalid image data");
+  }
+
+  const [, mimeType, base64Data] = matches;
+
+  // Base64データをバッファに変換
+  const buffer = Buffer.from(base64Data, "base64");
+
+  // MIMEタイプから拡張子を取得
+  const extension = mimeType.split("/")[1];
+  const fileName = `image_${Date.now()}.${extension}`;
+
+  const { url } = await managementClient.uploadMedia({
+    data: new Blob([buffer], { type: mimeType }),
+    name: fileName,
+  });
+
+  return url;
+};
+
 export const createThebethSetlist = async (
   setlist: SetlistPostData,
 ): Promise<void> => {
@@ -76,7 +100,6 @@ export const createThebethSetlist = async (
       endpoint: "setlists",
       content: setlist,
     });
-    console.log(res);
   } catch (e: any) {
     throw new Error(e.message);
   }

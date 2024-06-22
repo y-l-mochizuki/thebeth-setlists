@@ -26,29 +26,31 @@ export const MusicSelectDrawer = ({
     <Drawer title="曲一覧" isOpen={isOpen} onOpenChange={onOpenChange}>
       <div className="flex flex-col gap-8">
         <div className="grid grid-cols-2 gap-4">
-          {musics.map((v) => (
-            <Checkbox
-              size="sm"
-              classNames={{
-                base: "w-full m-0 max-w-none flex",
-                label: "flex-1 justify-start",
-              }}
-              lineThrough
-              key={v.id}
-              value={v.id}
-              onChange={() => {
-                setChecked((prev) => {
-                  if (prev.includes(v)) {
-                    return prev.filter((m) => m.id !== v.id);
-                  }
+          {musics
+            .filter((v) => v.title !== "リベンジャー")
+            .map((v) => (
+              <Checkbox
+                size="sm"
+                classNames={{
+                  base: "w-full m-0 max-w-none flex",
+                  label: "flex-1 justify-start",
+                }}
+                lineThrough
+                key={v.id}
+                value={v.id}
+                onChange={() => {
+                  setChecked((prev) => {
+                    if (prev.includes(v)) {
+                      return prev.filter((m) => m.id !== v.id);
+                    }
 
-                  return [...prev, v];
-                });
-              }}
-            >
-              <span className="line-clamp-1">{v.title}</span>
-            </Checkbox>
-          ))}
+                    return [...prev, v];
+                  });
+                }}
+              >
+                <span className="line-clamp-1">{v.title}</span>
+              </Checkbox>
+            ))}
         </div>
         <Button
           onClick={handleMusicsAddButton}
