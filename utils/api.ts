@@ -12,6 +12,7 @@ export type Music = {
 };
 
 type Category = {
+  fieldId: string;
   thebest_thebeth: boolean;
   taiban: boolean;
 };
@@ -52,6 +53,31 @@ export const getTheBethSetlists = async (): Promise<Setlist[]> => {
     return res.contents;
   } catch (e: any) {
     // TODO: Handle error
+    throw new Error(e.message);
+  }
+};
+
+export type SetlistPostData = {
+  image: string;
+  title: string;
+  category: Category;
+  live_date: string; // ISO 8601形式の日付文字列
+  musics: string[]; // music.idの配列
+  purchase_links?: {
+    link: string;
+  }[];
+};
+
+export const createThebethSetlist = async (
+  setlist: SetlistPostData,
+): Promise<void> => {
+  try {
+    const res = await client.create({
+      endpoint: "setlists",
+      content: setlist,
+    });
+    console.log(res);
+  } catch (e: any) {
     throw new Error(e.message);
   }
 };

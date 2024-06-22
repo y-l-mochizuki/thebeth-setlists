@@ -32,24 +32,32 @@ export const ImageCropper = ({
   };
 
   return (
-    <Drawer title="編集" isOpen={isOpen} onOpenChange={onOpenChange}>
-      <div className="relative h-full">
-        <Cropper
-          image={image}
-          crop={crop}
-          zoom={zoom}
-          aspect={1}
-          onCropChange={setCrop}
-          onCropComplete={(_, croppedAreaPixels) => {
-            setCroppedAreaPixels(croppedAreaPixels);
-          }}
-          onZoomChange={setZoom}
-          cropSize={{ width: 300, height: 300 }}
-        />
+    <Drawer title="編集" isOpen={isOpen} onOpenChange={onOpenChange} fullHeight>
+      <div className="h-full flex flex-col justify-between">
+        <div className="relative aspect-square">
+          <Cropper
+            image={image}
+            crop={crop}
+            zoom={zoom}
+            aspect={1}
+            onCropChange={setCrop}
+            onCropComplete={(_, croppedAreaPixels) => {
+              setCroppedAreaPixels(croppedAreaPixels);
+            }}
+            onZoomChange={setZoom}
+            cropSize={{ width: 300, height: 300 }}
+          />
+        </div>
+        <Button
+          onClick={handleComplete}
+          size="lg"
+          fullWidth
+          color="primary"
+          className="text-black"
+        >
+          適用
+        </Button>
       </div>
-      <Button onClick={handleComplete} size="lg">
-        適用
-      </Button>
     </Drawer>
   );
 };

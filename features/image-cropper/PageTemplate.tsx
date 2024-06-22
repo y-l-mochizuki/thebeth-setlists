@@ -8,6 +8,8 @@ import {
   useDisclosure,
   Button,
   Card,
+  DateValue,
+  Calendar,
 } from "@nextui-org/react";
 import { Music } from "@/utils/api";
 import Image from "next/image";
@@ -30,6 +32,9 @@ import {
 import { MusicSelectDrawer } from "./components/MusicSelectDrawer";
 import { SortableItem } from "./components/SortableItem";
 import { ImageCropper } from "./components/ImageCropper";
+import { dateValueToJSTISOString } from "./utils";
+import { errorMessage } from "@/utils/error-message";
+import { I18nProvider } from "@react-aria/i18n";
 
 type Props = {
   musics: Music[];
@@ -39,6 +44,9 @@ type Props = {
 export const PageTemplate = ({ musics }: Props) => {
   const [imageList, setImageList] = useState<ImageListType>([]);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const [title, setTitle] = useState<string>("");
+  const [liveDate, setLiveDate] = useState<DateValue | null>(null);
+  const [isTaiban, setIsTaiban] = useState<boolean>(false);
   const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
 
   const handleSelectMusicRemoveButton = (id: string) => {
@@ -71,6 +79,60 @@ export const PageTemplate = ({ musics }: Props) => {
 
   const handleMusicSelectDrawerComplete = (selectedMusics: Music[]) => {
     setSelectedMusics((prev) => [...prev, ...selectedMusics]);
+  };
+
+  const handleSubmitButton = async () => {
+    if (!croppedImage) {
+      alert("画像を選択してください");
+      return;
+    }
+
+    if (!title) {
+      alert("セットリスト名を入力してください");
+      return;
+    }
+
+    const ToJSTISOString = dateValueToJSTISOString(liveDate);
+    if (!ToJSTISOString) {
+      alert("開催日を選択してください");
+      return;
+    }
+
+    if (selectedMusics.length === 0) {
+      alert("曲を選択してください");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/setlists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          image: croppedImage,
+          title,
+          category: {
+            fieldId: "category",
+            thebest_thebeth: false,
+            taiban: isTaiban,
+          },
+          live_date: dateValueToJSTISOString(liveDate),
+          musics: selectedMusics.map((v) => v.id),
+          purchase_links: [],
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("セットリストの作成に失敗しました。");
+      }
+
+      alert("セットリストが正常に作成されました。");
+      window.location.reload();
+    } catch (e: any) {
+      alert("セットリストの作成に失敗しました。");
+      throw new Error(errorMessage(e));
+    }
   };
 
   const {
@@ -118,16 +180,33 @@ export const PageTemplate = ({ musics }: Props) => {
             placeholder="セットリスト名"
             type="text"
             size="lg"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </section>
-        <section className="relative">
-          <DatePicker labelPlacement="outside" size="lg" label="開催日" />
+        <section className="relative flex flex-col gap-2">
+          <span>開催日</span>
+          <I18nProvider locale="ja-JP">
+            <Calendar
+              classNames={{
+                base: "w-screen",
+                gridHeaderRow: "flex",
+                gridHeaderCell: "flex-1 aspect-square",
+                gridBodyRow: "px-4 flex",
+                cell: "flex-1 aspect-square",
+                cellButton:
+                  "text-xl w-full h-full data-[selected=true]:text-black",
+              }}
+              value={liveDate}
+              onChange={(date) => setLiveDate(date)}
+            />
+          </I18nProvider>
         </section>
         <section className="flex flex-col gap-2">
           <span>カテゴリ</span>
           <div className="flex justify-between">
             <span>対バン</span>
-            <Switch />
+            <Switch isSelected={isTaiban} onValueChange={setIsTaiban} />
           </div>
         </section>
         <section className="flex flex-col gap-4">
@@ -135,10 +214,18 @@ export const PageTemplate = ({ musics }: Props) => {
             <span>曲一覧</span>
             <Button onClick={onOpenMusicDrawer}>曲を追加する</Button>
           </div>
+          {selectedMusics.length === 0 && (
+            <p className="text-white/50 font-bold text-center py-4">
+              曲を追加してください
+            </p>
+          )}
           <div className="flex gap-2">
             <div className="flex flex-col gap-1">
               {selectedMusics.map((_, i) => (
-                <span className="w-6 h-14 flex items-center text-lg text-white/95">
+                <span
+                  className="w-6 h-14 flex items-center text-lg text-white/95"
+                  key={i}
+                >
                   {i + 1}.
                 </span>
               ))}
@@ -148,7 +235,7 @@ export const PageTemplate = ({ musics }: Props) => {
                 sensors={sensors}
                 collisionDetection={closestCenter}
                 onDragStart={() => {
-                  const scrollElement = document.querySelector("body > *");
+                  const scrollElement = document.querySelector("body > div");
                   if (!(scrollElement instanceof HTMLElement)) {
                     return;
                   }
@@ -156,7 +243,7 @@ export const PageTemplate = ({ musics }: Props) => {
                   scrollElement.style.overflow = "hidden";
                 }}
                 onDragEnd={(e) => {
-                  const scrollElement = document.querySelector("body > *");
+                  const scrollElement = document.querySelector("body > div");
                   if (!(scrollElement instanceof HTMLElement)) {
                     return;
                   }
@@ -169,7 +256,7 @@ export const PageTemplate = ({ musics }: Props) => {
                   items={selectedMusics}
                   strategy={verticalListSortingStrategy}
                 >
-                  {selectedMusics.map((music) => (
+                  {selectedMusics.map((music, i) => (
                     <SortableItem
                       key={music.id}
                       id={music.id}
@@ -184,6 +271,16 @@ export const PageTemplate = ({ musics }: Props) => {
               </DndContext>
             </div>
           </div>
+        </section>
+        <section className="mt-8">
+          <Button
+            size="lg"
+            fullWidth
+            className="bg-yellow-500 text-black"
+            onClick={handleSubmitButton}
+          >
+            投稿する
+          </Button>
         </section>
       </div>
       <ImageCropper

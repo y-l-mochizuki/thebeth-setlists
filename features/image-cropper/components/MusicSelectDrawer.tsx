@@ -50,7 +50,12 @@ export const MusicSelectDrawer = ({
             </Checkbox>
           ))}
         </div>
-        <Button onClick={handleMusicsAddButton} size="lg">
+        <Button
+          onClick={handleMusicsAddButton}
+          size="lg"
+          color="primary"
+          className="text-black"
+        >
           曲を追加する
         </Button>
       </div>

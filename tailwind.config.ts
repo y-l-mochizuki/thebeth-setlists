@@ -19,7 +19,19 @@ const config: Config = {
     },
   },
   darkMode: "class",
-  plugins: [nextui()],
+  plugins: [
+    nextui({
+      themes: {
+        dark: {
+          colors: {
+            primary: {
+              DEFAULT: "#eab308",
+            },
+          },
+        },
+      },
+    }),
+  ],
   future: {
     // hover をサポートしていないブラウザでは hover を無効化する
     hoverOnlyWhenSupported: true,
