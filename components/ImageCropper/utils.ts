@@ -39,7 +39,7 @@ const createImage = (url: string): Promise<HTMLImageElement> =>
   });
 
 // Copy from "https://codesandbox.io/s/react-easy-crop-demo-with-cropped-output-q8q1mnr01w?from-embed=&file=/src/cropImage.js:0-2289"
-async function getCroppedImg(imageSrc: string, pixelCrop: PixelCropType) {
+const getCroppedImg = async (imageSrc: string, pixelCrop: PixelCropType) => {
   const image = await createImage(imageSrc);
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -69,9 +69,9 @@ async function getCroppedImg(imageSrc: string, pixelCrop: PixelCropType) {
   );
 
   return canvas.toDataURL("image/jpeg");
-}
+};
 
-export const cropImage = async (
+export const getCropImage = async (
   image: string,
   croppedAreaPixels: PixelCropType,
 ) => {
@@ -85,23 +85,4 @@ export const cropImage = async (
       throw new Error(errorMessage(error));
     }
   }
-};
-
-export const dateValueToJSTISOString = (
-  date: DateValue | null,
-): string | null => {
-  if (!date) {
-    return null;
-  }
-
-  // yearプロパティが存在しない場合は現在の年を使用
-  const year = date.year ?? new Date().getFullYear();
-
-  // 日本時間（JST）の日付オブジェクトを作成
-  const jstDate = new Date(year, date.month - 1, date.day, 9, 0, 0); // 9時間を加算
-
-  // ISO 8601形式の文字列を生成（日本時間）
-  const isoString = jstDate.toISOString().replace("Z", "+09:00");
-
-  return isoString;
 };

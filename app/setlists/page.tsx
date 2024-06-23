@@ -1,6 +1,5 @@
 import { Setlist, getTheBethSetlists } from "@/utils/api";
-import { Card } from "@/components";
-import { CategoryTabs } from "./_components";
+import { Card, CategoryTab } from "@/components";
 
 type ExpansionSetlist = Setlist & {
   isExternal?: boolean;
@@ -38,7 +37,7 @@ export default async function Home() {
 
   return (
     <div className="grid gap-4">
-      <CategoryTabs
+      <CategoryTab
         all={<Tab setlists={addedThebestThebethFinal} />}
         thebest_thebeth={<Tab setlists={filteredTheBethSetlists} />}
         taiban={<Tab setlists={filteredTaibanSetlists} />}
@@ -50,6 +49,7 @@ export default async function Home() {
 type TabProps = {
   setlists: ExpansionSetlist[];
 };
+
 const Tab = ({ setlists }: TabProps) => {
   return (
     <Card.List>

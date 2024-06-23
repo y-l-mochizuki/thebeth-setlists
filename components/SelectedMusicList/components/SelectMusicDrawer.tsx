@@ -1,24 +1,24 @@
+import { useState } from "react";
 import { Drawer } from "@/components";
 import { Music } from "@/utils/api";
 import { Button, Checkbox } from "@nextui-org/react";
-import { useState } from "react";
 
 type Props = {
   musics: Music[];
   isOpen: boolean;
   onOpenChange: () => void;
-  complete: (selectedMusic: Music[]) => void;
+  onSelectMusicCompleted: (selectedMusic: Music[]) => void;
 };
 
-export const MusicSelectDrawer = ({
+export const SelectMusicDrawer = ({
   musics,
   isOpen,
   onOpenChange,
-  complete,
+  onSelectMusicCompleted,
 }: Props) => {
   const [checked, setChecked] = useState<Music[]>([]);
-  const handleMusicsAddButton = () => {
-    complete(checked);
+  const handleSelectMusicCompleted = () => {
+    onSelectMusicCompleted(checked);
     onOpenChange();
   };
 
@@ -53,7 +53,7 @@ export const MusicSelectDrawer = ({
             ))}
         </div>
         <Button
-          onClick={handleMusicsAddButton}
+          onClick={handleSelectMusicCompleted}
           size="lg"
           color="primary"
           className="text-black"

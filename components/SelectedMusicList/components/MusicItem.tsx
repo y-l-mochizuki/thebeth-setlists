@@ -1,19 +1,15 @@
 import { PropsWithChildren } from "react";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { Card } from "@nextui-org/react";
 import { Menu, X } from "tabler-icons-react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 type Props = PropsWithChildren<{
   id: string;
-  handleSelectMusicRemoveButton: (id: string) => void;
+  onRemoveMusicButton: (id: string) => void;
 }>;
 
-export function SortableItem({
-  id,
-  handleSelectMusicRemoveButton,
-  children,
-}: Props) {
+export function MusicItem({ id, onRemoveMusicButton, children }: Props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: id });
 
@@ -24,11 +20,11 @@ export function SortableItem({
 
   return (
     <div {...attributes} ref={setNodeRef} style={style}>
-      <Card className="h-14 py-0 relative flex-row items-center">
+      <Card className="h-14 py-0 flex-row items-center">
         <button
           className="h-full px-2 flex items-center justify-center"
           type="button"
-          onClick={() => handleSelectMusicRemoveButton(id)}
+          onClick={() => onRemoveMusicButton(id)}
         >
           <X className="text-red-500" size={12} strokeWidth={1} />
         </button>
