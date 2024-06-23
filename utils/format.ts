@@ -1,3 +1,5 @@
+import { DateValue } from "@nextui-org/react";
+
 export const toJstDate = (utcDateString: string): string => {
   const utcDate = new Date(utcDateString);
   const jstOffset = 9 * 60; // 日本標準時のオフセット（分）
@@ -24,4 +26,23 @@ export const identifyURL = (url: string) => {
   }
 
   return "外部サイト";
+};
+
+export const dateValueToJSTISOString = (
+  date: DateValue | null,
+): string | null => {
+  if (!date) {
+    return null;
+  }
+
+  // yearプロパティが存在しない場合は現在の年を使用
+  const year = date.year ?? new Date().getFullYear();
+
+  // 日本時間（JST）の日付オブジェクトを作成
+  const jstDate = new Date(year, date.month - 1, date.day, 9, 0, 0); // 9時間を加算
+
+  // ISO 8601形式の文字列を生成（日本時間）
+  const isoString = jstDate.toISOString().replace("Z", "+09:00");
+
+  return isoString;
 };

@@ -3,16 +3,16 @@
 import React, { useState } from "react";
 import { Switch, Input, Button, DateValue, Calendar } from "@nextui-org/react";
 import { Music } from "@/utils/api";
-import { dateValueToJSTISOString } from "./utils";
 import { errorMessage } from "@/utils/error-message";
 import { I18nProvider } from "@react-aria/i18n";
 import { ImageCropper, SelectedMusicList } from "@/components";
+import { dateValueToJSTISOString } from "@/utils/format";
 
 type Props = {
   musics: Music[];
 };
 
-export const PageTemplate = ({ musics }: Props) => {
+export const Template = ({ musics }: Props) => {
   const [image, setImage] = useState<string | undefined>(undefined);
   const [title, setTitle] = useState<string>("");
   const [liveDate, setLiveDate] = useState<DateValue | null>(null);
