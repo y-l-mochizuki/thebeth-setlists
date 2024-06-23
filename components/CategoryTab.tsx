@@ -25,7 +25,7 @@ const getTabName = (value: any): TAB_NAMES => {
   return isTabName(value) ? value : TAB_NAMES.ALL;
 };
 
-export const CategoryTabs = ({ all, thebest_thebeth, taiban }: Props) => {
+export const CategoryTab = ({ all, thebest_thebeth, taiban }: Props) => {
   const CategoryTabsContent = () => {
     const searchParams = useSearchParams();
     const search = searchParams.get("category");
