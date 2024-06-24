@@ -18,26 +18,33 @@ export const Template = ({ musics }: Props) => {
   const [liveDate, setLiveDate] = useState<DateValue | null>(null);
   const [isTaiban, setIsTaiban] = useState<boolean>(false);
   const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
+  const [isSubmitLoading, setIsSubmitLoading] = useState<boolean>(false);
+  const handleSubmitError = (alertTitle: string) => {
+    alert(alertTitle);
+    setIsSubmitLoading(false);
+  };
 
   const handleSubmitButton = async () => {
+    setIsSubmitLoading(true);
+
     if (!image) {
-      alert("画像を選択してください");
+      handleSubmitError("画像を選択してください");
       return;
     }
 
     if (!title) {
-      alert("セットリスト名を入力してください");
+      handleSubmitError("セットリスト名を入力してください");
       return;
     }
 
     const ToJSTISOString = dateValueToJSTISOString(liveDate);
     if (!ToJSTISOString) {
-      alert("開催日を選択してください");
+      handleSubmitError("開催日を選択してください");
       return;
     }
 
     if (selectedMusics.length === 0) {
-      alert("曲を選択してください");
+      handleSubmitError("曲を選択してください");
       return;
     }
 
@@ -62,16 +69,18 @@ export const Template = ({ musics }: Props) => {
       });
 
       if (!res.ok) {
-        throw new Error("セットリストの作成に失敗しました。");
+        throw new Error(res.statusText);
       }
 
       alert("セットリストが正常に作成されました。");
       window.location.reload();
     } catch (e: any) {
-      alert("セットリストの作成に失敗しました。");
+      handleSubmitError("セットリストの作成に失敗しました。");
       throw new Error(errorMessage(e));
     }
   };
+
+  const submitButtonText = isSubmitLoading ? "投稿中..." : "投稿する";
 
   return (
     <>
@@ -128,8 +137,9 @@ export const Template = ({ musics }: Props) => {
             fullWidth
             className="bg-yellow-500 text-black"
             onClick={handleSubmitButton}
+            isLoading={isSubmitLoading}
           >
-            投稿する
+            {submitButtonText}
           </Button>
         </section>
       </div>
