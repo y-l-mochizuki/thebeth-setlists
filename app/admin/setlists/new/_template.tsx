@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Switch, Input, Button, DateValue, Calendar } from "@nextui-org/react";
-import { Music } from "@/utils/api";
+import { AlbumType, Music } from "@/utils/api";
 import { errorMessage } from "@/utils/error-message";
 import { I18nProvider } from "@react-aria/i18n";
 import { ImageCropper, SelectedMusicList } from "@/components";
@@ -10,9 +10,10 @@ import { dateValueToJSTISOString } from "@/utils/format";
 
 type Props = {
   musics: Music[];
+  albums: AlbumType[];
 };
 
-export const Template = ({ musics }: Props) => {
+export const Template = ({ musics, albums }: Props) => {
   const [image, setImage] = useState<string | undefined>(undefined);
   const [title, setTitle] = useState<string>("");
   const [liveDate, setLiveDate] = useState<DateValue | null>(null);
@@ -127,6 +128,7 @@ export const Template = ({ musics }: Props) => {
         <section>
           <SelectedMusicList
             musics={musics}
+            albums={albums}
             selectedMusics={selectedMusics}
             setSelectedMusics={setSelectedMusics}
           />
