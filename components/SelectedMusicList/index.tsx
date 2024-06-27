@@ -6,16 +6,18 @@ import { SelectMusicDrawer } from "./components/SelectMusicDrawer";
 import { MusicList } from "./components/MusicList";
 import { MusicItem } from "./components/MusicItem";
 import { useSelectedMusicList } from "./hooks/useSelectedMusicList";
-import { Music } from "@/utils/api";
+import { AlbumType, Music } from "@/utils/api";
 
 type Props = {
   musics: Music[];
+  albums: AlbumType[];
   selectedMusics: Music[];
   setSelectedMusics: Dispatch<SetStateAction<Music[]>>;
 };
 
 export const SelectedMusicList = ({
   musics,
+  albums,
   selectedMusics,
   setSelectedMusics,
 }: Props) => {
@@ -55,6 +57,7 @@ export const SelectedMusicList = ({
         )}
       />
       <SelectMusicDrawer
+        albums={albums}
         musics={musics}
         isOpen={isOpenMusicDrawer}
         onOpenChange={onOpenChangeMusicDrawer}
