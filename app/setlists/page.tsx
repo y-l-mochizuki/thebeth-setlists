@@ -22,6 +22,7 @@ const thebest_thebeth_final = {
   category: {
     thebest_thebeth: true,
     taiban: false,
+    sponsorship: true,
   },
 } satisfies ExpansionSetlist;
 
@@ -34,6 +35,9 @@ export default async function Home() {
   const filteredTaibanSetlists = addedThebestThebethFinal.filter(
     (setlist) => setlist.category?.taiban,
   );
+  const filteredSponsorshipSetlists = addedThebestThebethFinal.filter(
+    (setlist) => setlist.category?.sponsorship,
+  );
 
   return (
     <div className="grid gap-4">
@@ -41,6 +45,7 @@ export default async function Home() {
         all={<Tab setlists={addedThebestThebethFinal} />}
         thebest_thebeth={<Tab setlists={filteredTheBethSetlists} />}
         taiban={<Tab setlists={filteredTaibanSetlists} />}
+        sponsorship={<Tab setlists={filteredSponsorshipSetlists} />}
       />
     </div>
   );

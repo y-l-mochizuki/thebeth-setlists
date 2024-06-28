@@ -7,11 +7,13 @@ type Props = {
   all: React.ReactNode;
   thebest_thebeth: React.ReactNode;
   taiban: React.ReactNode;
+  sponsorship: React.ReactNode;
 };
 
 const TAB_NAMES = {
-  ALL: "ALL",
+  ALL: "all",
   THEBEST_THEBETH: "thebest_thebeth",
+  SPONSORSHIP: "sponsorship",
   TAIBAN: "taiban",
 } as const;
 
@@ -25,7 +27,12 @@ const getTabName = (value: any): TAB_NAMES => {
   return isTabName(value) ? value : TAB_NAMES.ALL;
 };
 
-export const CategoryTab = ({ all, thebest_thebeth, taiban }: Props) => {
+export const CategoryTab = ({
+  all,
+  thebest_thebeth,
+  taiban,
+  sponsorship,
+}: Props) => {
   const CategoryTabsContent = () => {
     const searchParams = useSearchParams();
     const search = searchParams.get("category");
@@ -58,6 +65,9 @@ export const CategoryTab = ({ all, thebest_thebeth, taiban }: Props) => {
         </Tab>
         <Tab key={TAB_NAMES.THEBEST_THEBETH} title="ザ・ベストザベス">
           {thebest_thebeth}
+        </Tab>
+        <Tab key={TAB_NAMES.SPONSORSHIP} title="主催">
+          {sponsorship}
         </Tab>
         <Tab key={TAB_NAMES.TAIBAN} title="対バン">
           {taiban}
