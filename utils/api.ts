@@ -140,6 +140,7 @@ export type AlbumType = {
     link: string;
   }[];
   release_date: string;
+  isArchived?: boolean;
 };
 
 export const getTheBethAlbums = async (): Promise<AlbumType[]> => {
