@@ -24,18 +24,10 @@ export const SelectMusicDrawer = ({
     onOpenChange();
   };
 
-  // TODO: 非公開のその他アルバムを作る
-  const otherMusic = musics.find((v) => v.id === "jwxgns6g0kw");
-  const otherMusics = {
-    id: "other",
-    title: "その他",
-    musics: !!otherMusic ? [otherMusic] : [],
-  };
-
   return (
     <Drawer title="曲一覧" isOpen={isOpen} onOpenChange={onOpenChange}>
       <div className="flex flex-col gap-8">
-        {[otherMusics, ...albums].map((v) => (
+        {albums.map((v) => (
           <div key={v.id}>
             <div className="font-bold text-white/95">{v.title}</div>
             <div className="grid grid-cols-2 gap-4 mt-4">
