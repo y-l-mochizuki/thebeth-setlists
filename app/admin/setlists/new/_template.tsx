@@ -18,6 +18,7 @@ export const Template = ({ musics, albums }: Props) => {
   const [title, setTitle] = useState<string>("");
   const [liveDate, setLiveDate] = useState<DateValue | null>(null);
   const [isTaiban, setIsTaiban] = useState<boolean>(false);
+  const [isSponsorship, setIsSponsorship] = useState<boolean>(false);
   const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
   const [isSubmitLoading, setIsSubmitLoading] = useState<boolean>(false);
   const handleSubmitError = (alertTitle: string) => {
@@ -62,6 +63,7 @@ export const Template = ({ musics, albums }: Props) => {
             fieldId: "category",
             thebest_thebeth: false,
             taiban: isTaiban,
+            isSponsorship: isSponsorship,
           },
           live_date: dateValueToJSTISOString(liveDate),
           musics: selectedMusics.map((v) => v.id),
@@ -123,6 +125,11 @@ export const Template = ({ musics, albums }: Props) => {
           <div className="flex justify-between">
             <span>対バン</span>
             <Switch isSelected={isTaiban} onValueChange={setIsTaiban} />
+            <span>主催</span>
+            <Switch
+              isSelected={isSponsorship}
+              onValueChange={setIsSponsorship}
+            />
           </div>
         </section>
         <section>

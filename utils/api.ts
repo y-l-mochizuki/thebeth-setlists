@@ -15,6 +15,7 @@ type Category = {
   fieldId?: string;
   thebest_thebeth: boolean;
   taiban: boolean;
+  sponsorship: boolean;
 };
 
 export type Setlist = {
