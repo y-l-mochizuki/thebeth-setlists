@@ -34,20 +34,20 @@ export const OFFICIAL_INFO = {
 };
 
 export const SUBSCRIPTION_INFO = {
-  APPLE_MUSIC_1: {
+  APPLE_MUSIC: {
     URL: "https://music.apple.com/jp/artist/the-beth/1732503432",
-    NAME: "Apple Music 1",
-  },
-  APPLE_MUSIC_2: {
-    URL: "https://music.apple.com/jp/artist/the-beth/1545906015",
-    NAME: "Apple Music 2",
+    NAME: "Apple Music",
   },
   SPOTIFY: {
-    URL: "https://open.spotify.com/intl-ja/artist/7o2rHXjPaV8cGzA4PMYomW?si=xC39q1wzTL20u4Inxm3VUA",
+    URL: "https://open.spotify.com/intl-ja/artist/2hNJP3zNhIGZa3OVlkoQs5",
     NAME: "Spotify",
   },
-  TUNECORE_JAPAN: {
-    URL: "https://www.tunecore.co.jp/artists/THE_BETH",
-    NAME: "TuneCore Japan",
+  YOUTUBE: {
+    URL: "https://www.youtube.com/channel/UC9SA_TKPIqbbvGPGp6ydUqw",
+    NAME: "YouTube",
+  },
+  TIKTOK: {
+    URL: "https://www.tiktok.com/@thebeth_1129?lang=ja-JP",
+    NAME: "TikTok",
   },
 };
