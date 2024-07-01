@@ -79,7 +79,7 @@ export const DetailPage = ({ content }: Props) => {
                   case "TikTok":
                     return BrandTiktok;
                   default:
-                    return BrandYoutube;
+                    return BrandApple;
                 }
               })();
 
