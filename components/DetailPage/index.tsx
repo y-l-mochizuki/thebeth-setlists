@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Card } from "@nextui-org/react";
+import { Button, Card } from "@nextui-org/react";
 import { AlbumType, Setlist } from "@/utils/api";
 import { identifyURL, toJstDate } from "@/utils/format";
 import { MusicTable } from "./components/MusicTable";
@@ -10,6 +10,12 @@ import {
   isSetlistTypeWithLiveDate,
 } from "./helper";
 import { SUBSCRIPTION_INFO } from "@/const";
+import {
+  BrandApple,
+  BrandSpotify,
+  BrandTiktok,
+  BrandYoutube,
+} from "tabler-icons-react";
 
 type Props = {
   content: AlbumType | Setlist;
@@ -59,13 +65,39 @@ export const DetailPage = ({ content }: Props) => {
             />
           )}
 
-          <TagList
-            title="SUBSCRIPTION"
-            list={Object.values(SUBSCRIPTION_INFO).map((v) => ({
-              href: v.URL,
-              name: v.NAME,
-            }))}
-          />
+          <div className="text-center">SUBSCRIPTION & SNS</div>
+          <div className="grid grid-cols-2 gap-2">
+            {Object.values(SUBSCRIPTION_INFO).map((v) => {
+              const Icon = (() => {
+                switch (v.NAME) {
+                  case "Apple Music":
+                    return BrandApple;
+                  case "Spotify":
+                    return BrandSpotify;
+                  case "YouTube":
+                    return BrandYoutube;
+                  case "TikTok":
+                    return BrandTiktok;
+                  default:
+                    return BrandYoutube;
+                }
+              })();
+
+              return (
+                <Button
+                  key={v.NAME}
+                  as="a"
+                  target="_blank"
+                  href={v.URL}
+                  className="gap-1 text-black/90 font-bold"
+                  size="lg"
+                  color="primary"
+                >
+                  <Icon size={24} strokeWidth={2} /> {v.NAME}
+                </Button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
