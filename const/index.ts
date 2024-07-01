@@ -16,6 +16,10 @@ export const PAGE_INFO = {
     URL: "/albums",
     NAME: "ALBUM",
   },
+  PLAYLIST: {
+    URL: "/playlist",
+    NAME: "PLAYLIST",
+  },
 };
 
 export const OFFICIAL_INFO = {
