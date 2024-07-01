@@ -63,7 +63,7 @@ export const Template = ({ musics, albums }: Props) => {
             fieldId: "category",
             thebest_thebeth: false,
             taiban: isTaiban,
-            isSponsorship: isSponsorship,
+            sponsorship: isSponsorship,
           },
           live_date: dateValueToJSTISOString(liveDate),
           musics: selectedMusics.map((v) => v.id),
@@ -79,6 +79,7 @@ export const Template = ({ musics, albums }: Props) => {
       window.location.reload();
     } catch (e: any) {
       handleSubmitError("セットリストの作成に失敗しました。");
+      console.error(e);
       throw new Error(errorMessage(e));
     }
   };
