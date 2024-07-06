@@ -1,7 +1,9 @@
 import React, { PropsWithChildren } from "react";
 import Image from "next/image";
-import { Button, Card as NextUICard, Link } from "@nextui-org/react";
+import { Card as BaseCard } from "@nextui-org/react";
 import { toJstDate } from "@/utils/format";
+import Link from "next/link";
+import { twMerge } from "@/utils/tailwind-merge";
 
 type Image = {
   url: string;
@@ -16,14 +18,15 @@ type CardProps = {
 };
 
 export const Card = ({ href, image, title, date, isExternal }: CardProps) => {
+  const animationClassNames =
+    "active:opacity-50 transition-all duration-250 active:scale-95";
   return (
-    <Button
-      className="content-start grid h-auto bg-transparent border-0 p-0 justify-stretch rounded-none whitespace-pre-wrap"
-      as={Link}
+    <Link
+      className={twMerge("flex flex-col gap-1", animationClassNames)}
       href={href}
       target={isExternal ? "_blank" : undefined} // FIXME: ザ・ベストザベスFINALが終わったら削除する
     >
-      <NextUICard className="w-full aspect-square relative">
+      <BaseCard className="w-full aspect-square relative">
         {!!image && (
           <Image
             className="w-full h-full object-cover"
@@ -34,14 +37,14 @@ export const Card = ({ href, image, title, date, isExternal }: CardProps) => {
             priority
           />
         )}
-      </NextUICard>
-      <div>
+      </BaseCard>
+      <div className="flex flex-col flex-1 justify-between">
         <h2 className="font-bold text-sm line-clamp-2 text-white/95">
           {title}
         </h2>
         {!!date && <p className="opacity-50 text-sm">{toJstDate(date)}</p>}
       </div>
-    </Button>
+    </Link>
   );
 };
 
